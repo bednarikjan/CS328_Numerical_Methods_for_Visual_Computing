@@ -1,6 +1,6 @@
 ## Latex intermediary files.
 *.aux
-*.bbl 
+*.bbl
 *.blg
 *.dvi
 *.fdb_latexmk
@@ -19,3 +19,6 @@ missfont.log
 
 ## MacOS files.
 .DS_Store
+
+# pygment build folders
+_minted*
