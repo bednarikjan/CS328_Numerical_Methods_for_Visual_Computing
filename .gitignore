@@ -1,0 +1,21 @@
+## Latex intermediary files.
+*.aux
+*.bbl 
+*.blg
+*.dvi
+*.fdb_latexmk
+*.fls
+*.log
+*.nav
+*.out
+*.snm
+*.synctex.gz
+*.toc
+*.vrb
+missfont.log
+
+## PDFs
+*.pdf
+
+## MacOS files.
+.DS_Store
