@@ -65,17 +65,20 @@ Jan Bednarik}
 
 \maketitle
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Introduction}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\begin{frame}{Why Python}
+\begin{frame}{About Python}
+
+% About Python   
    
-   
+%why python
+%- high level, fast prototyping, full-stack of packages/tools for scientific computations (often internally implemented in C) 
+
 %    CPython \textit{extension module}: Python module not written in Python.
 %
 %    \pause
@@ -98,67 +101,77 @@ Jan Bednarik}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\begin{frame}{Python C API}
-    It is possible to write CPython extension modules in pure C, but...
-
-    \begin{itemize}
-        \item \pause Manual refcounting
-        \item \pause Manual exception handling
-        \item \pause Boilerplate to define functions and modules
-        \item \pause High entry barrier, prone to programmer errors
-        \item \pause Differences in the API between Python versions
-    \end{itemize}
+\begin{frame}{Installation}
+%    It is possible to write CPython extension modules in pure C, but...
+%
+%    \begin{itemize}
+%        \item \pause Manual refcounting
+%        \item \pause Manual exception handling
+%        \item \pause Boilerplate to define functions and modules
+%        \item \pause High entry barrier, prone to programmer errors
+%        \item \pause Differences in the API between Python versions
+%    \end{itemize}
 \end{frame}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\begin{frame}{Cython}
-    Cython: "let's write C extensions as if it was Python".
+\begin{frame}{Working with Python}
 
-    \pause
+% Terminal, IPython, Jupyter, IDEs
 
-    Why not?
-
-    \begin{itemize}
-        \item \pause It's neither C nor Python
-        \item \pause A 2-line Cython module can be transpiled into 2K lines of C
-        \item \pause Two build steps (\mono{.pyx} $\rightarrow$ \mono{.c}, \mono{.c} $\rightarrow$ \mono{.so}); poor IDE support
-        \item \pause Limited \cpp{} support (scoped enums, non-type
-            template parameters, templated overloads, variadic templates,
-            universal references, etc).
-        \item \pause Limited support for generic code beyond fused types
-        \item \pause Have to create stubs for anything outside standard library
-        \item \pause Great for wrapping a few functions, not so great for large codebases
-        \item \pause Debugging compiled Cython extensions is \textbf{pain}
-    \end{itemize}
 \end{frame}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Basic syntax}
 
-\begin{frame}[fragile]{Cython}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+\begin{frame}[fragile]{Code structure, Comments}
+%\vspace*{-1.5cm}
+
+	Code structure
+	\begin{itemize}
+		\item \pause Python uses \textbf{indentation} (whitespace) to separate blocks.
+		\item \pause Only relative indentation among blocks matters.
+		\item \pause Consistent indentation within a block.
+	\end{itemize}
+	
+	\pause
     \begin{pythoncode}
-        def f(n: int):
-            for i in range(n):  # <-------
-                pass
+		if a < 5:
+		    print('line one')
+		      print('line two')  # --> IndentationError exception.
     \end{pythoncode}
 
-    \pause \darrow
+    \pause
+    
+    Comments
+    \begin{itemize}
+	\item \pause Single-line comments, multi-line comments (docstring)
+    \end{itemize}
 
-    \begin{shcode}
-        $ cythonize example.pyx
-    \end{shcode}
-
-    \pause \darrow
-
-    \begin{shcode}
-      /\___/\
-     ( o   o )
-     (  =^=  )
-     (        )
-     (         )
-     (          )))))))))))
-    \end{shcode}
+	\pause
+	 \begin{pythoncode}
+	# I am a single line comment.
+	""" I am 
+	a multi-line comment. """
+	\end{pythoncode}
+	
+%    \begin{shcode}
+%        $ cythonize example.pyx
+%    \end{shcode}
+%
+%    \pause \darrow
+%
+%    \begin{shcode}
+%      /\___/\
+%     ( o   o )
+%     (  =^=  )
+%     (        )
+%     (         )
+%     (          )))))))))))
+%    \end{shcode}
 
 \end{frame}
 
