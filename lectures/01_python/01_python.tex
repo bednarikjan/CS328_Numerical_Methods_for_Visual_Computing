@@ -54,8 +54,8 @@
 \AtBeginEnvironment{minted}{\setstretch{1.2}}
 
 \title{Python Tutorial}
-\subtitle{RGL - CS328 Numerical Methods for Visual Computing}
-\date{\today}
+\subtitle{CS-328 Numerical Methods for Visual Computing}
+\date{September 20, 2017}
 \author{Tizian Zeltner\\
 Jan Bednarik}
 %\institute{Susquehanna International Group\\
@@ -72,1253 +72,419 @@ Jan Bednarik}
 \section{Introduction}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\begin{frame}{Extension modules}
-    CPython \textit{extension module}: Python module not written in Python.
+\section{Language Basics}
 
-    \pause
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-    Most often written in C or \cpp{}.
+\section{Abstract Data Types}
 
-    \pause
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-    \hrulefill
-
-    \textit{Why bother?}
+\begin{frame}[fragile]{Dictionaries}
 
     \begin{itemize}
-        \item \pause Interfacing with existing libraries
-        \item \pause Writing performance-critical code
-        \item \pause Mirroring library API in Python to aid prototyping
-        \item \pause Running tests for non-Python libraries in Python
-    \end{itemize}
-\end{frame}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\begin{frame}{Python C API}
-    It is possible to write CPython extension modules in pure C, but...
-
-    \begin{itemize}
-        \item \pause Manual refcounting
-        \item \pause Manual exception handling
-        \item \pause Boilerplate to define functions and modules
-        \item \pause High entry barrier, prone to programmer errors
-        \item \pause Differences in the API between Python versions
-    \end{itemize}
-\end{frame}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\begin{frame}{Cython}
-    Cython: "let's write C extensions as if it was Python".
-
-    \pause
-
-    Why not?
-
-    \begin{itemize}
-        \item \pause It's neither C nor Python
-        \item \pause A 2-line Cython module can be transpiled into 2K lines of C
-        \item \pause Two build steps (\mono{.pyx} $\rightarrow$ \mono{.c}, \mono{.c} $\rightarrow$ \mono{.so}); poor IDE support
-        \item \pause Limited \cpp{} support (scoped enums, non-type
-            template parameters, templated overloads, variadic templates,
-            universal references, etc).
-        \item \pause Limited support for generic code beyond fused types
-        \item \pause Have to create stubs for anything outside standard library
-        \item \pause Great for wrapping a few functions, not so great for large codebases
-        \item \pause Debugging compiled Cython extensions is \textbf{pain}
-    \end{itemize}
-\end{frame}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\begin{frame}[fragile]{Cython}
-
-    \begin{pythoncode}
-        def f(n: int):
-            for i in range(n):  # <-------
-                pass
-    \end{pythoncode}
-
-    \pause \darrow
-
-    \begin{shcode}
-        $ cythonize example.pyx
-    \end{shcode}
-
-    \pause \darrow
-
-    \begin{shcode}
-      /\___/\
-     ( o   o )
-     (  =^=  )
-     (        )
-     (         )
-     (          )))))))))))
-    \end{shcode}
-
-\end{frame}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\begin{frame}[fragile]{Cython}
-
-\begin{minted}[fontsize=\supertiny]{cpp}
-/* "example.pyx":2
- * def f(n: int):
- *     for i in range(n):             # <<<<<<<<<<<<<<
- *         pass
- *
- */
-  __pyx_t_1 = PyTuple_New(1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 2, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  __Pyx_INCREF(__pyx_v_n);
-  __Pyx_GIVEREF(__pyx_v_n);
-  PyTuple_SET_ITEM(__pyx_t_1, 0, __pyx_v_n);
-  __pyx_t_2 = __Pyx_PyObject_Call(__pyx_builtin_range, __pyx_t_1, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 2, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_2);
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  if (likely(PyList_CheckExact(__pyx_t_2)) || PyTuple_CheckExact(__pyx_t_2)) {
-    __pyx_t_1 = __pyx_t_2; __Pyx_INCREF(__pyx_t_1); __pyx_t_3 = 0;
-    __pyx_t_4 = NULL;
-  } else {
-    __pyx_t_3 = -1; __pyx_t_1 = PyObject_GetIter(__pyx_t_2); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 2, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_1);
-    __pyx_t_4 = Py_TYPE(__pyx_t_1)->tp_iternext; if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 2, __pyx_L1_error)
-  }
-  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  for (;;) {
-    if (likely(!__pyx_t_4)) {
-      if (likely(PyList_CheckExact(__pyx_t_1))) {
-        if (__pyx_t_3 >= PyList_GET_SIZE(__pyx_t_1)) break;
-        #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-        __pyx_t_2 = PyList_GET_ITEM(__pyx_t_1, __pyx_t_3); __Pyx_INCREF(__pyx_t_2); __pyx_t_3++; if (unlikely(0 < 0)) __PYX_ERR(0, 2, __pyx_L1_error)
-        #else
-        __pyx_t_2 = PySequence_ITEM(__pyx_t_1, __pyx_t_3); __pyx_t_3++; if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 2, __pyx_L1_error)
-        __Pyx_GOTREF(__pyx_t_2);
-        #endif
-      } else {
-        if (__pyx_t_3 >= PyTuple_GET_SIZE(__pyx_t_1)) break;
-        #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-        __pyx_t_2 = PyTuple_GET_ITEM(__pyx_t_1, __pyx_t_3); __Pyx_INCREF(__pyx_t_2); __pyx_t_3++; if (unlikely(0 < 0)) __PYX_ERR(0, 2, __pyx_L1_error)
-        #else
-        __pyx_t_2 = PySequence_ITEM(__pyx_t_1, __pyx_t_3); __pyx_t_3++; if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 2, __pyx_L1_error)
-        __Pyx_GOTREF(__pyx_t_2);
-        #endif
-      }
-    } else {
-      __pyx_t_2 = __pyx_t_4(__pyx_t_1);
-      if (unlikely(!__pyx_t_2)) {
-        PyObject* exc_type = PyErr_Occurred();
-        if (exc_type) {
-          if (likely(exc_type == PyExc_StopIteration || PyErr_GivenExceptionMatches(exc_type, PyExc_StopIteration))) PyErr_Clear();
-          else __PYX_ERR(0, 2, __pyx_L1_error)
-        }
-        break;
-      }
-      __Pyx_GOTREF(__pyx_t_2);
-    }
-    __Pyx_XDECREF_SET(__pyx_v_i, __pyx_t_2);
-    __pyx_t_2 = 0;
-  }
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-\end{minted}
-
-\end{frame}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\begin{frame}[fragile]{Cython}
-    \begin{pythoncode}
-        def f(n: int):
-            @\hlcode{cdef int i}@
-            for i in range(n):
-                pass
-    \end{pythoncode}
-
-    \pause \darrow
-
-\begin{cppcode}
-  __pyx_t_1 = __Pyx_PyInt_As_long(__pyx_v_n);
-  if (unlikely((__pyx_t_1 == (long)-1) && PyErr_Occurred()))
-    __PYX_ERR(0, 3, __pyx_L1_error)
-  for (__pyx_t_2 = 0; __pyx_t_2 < __pyx_t_1; __pyx_t_2+=1) {
-    __pyx_v_i = __pyx_t_2;
-  }
-\end{cppcode}
-
-\end{frame}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\begin{frame}{Boost.Python}
-
-    Why not?
-
-    \begin{itemize}
-        \item \pause Requires building \mono{boost_python} library
-        \item \pause \ldots (!) which requires Boost (full library is 1.5M LOC headers)
-        \item \pause \ldots and uses SCons for building (Python2-only build tool)
-        \item \pause Relies heavily on Boost.MPL due to being stuck in \cpp{03}
-        \item \pause \ldots so large extension modules may take very long to compile
-        \item \pause \ldots and resulting binaries may end up being very big
-        \item \pause $<200$ commits in the last 5 years
+        \item \pause Unordered set of (\emph{key, value}) pairs
+        \item \pause Keys must be immutable (numbers or strings)
     \end{itemize}
 
     \pause
 
-    (still a great library if you're already
-    using Boost; \pybind's syntax and initial API design were heavily
-    influenced by Boost.Python)
-
-\end{frame}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\begin{frame}{pybind11}
-
-    \pybind is a lightweight header-only library that allows
-    interacting with Python interpreter and writing Python
-    extension modules in modern \cpp{}.
-
-    \begin{itemize}
-        \item \pause Header-only; no dependencies; doesn't require specific build tools
-        \item \pause 5K LOC core codebase (8K entire library)
-        \item \pause Heavily optimized for binary size; fast compile time
-        \item \pause GCC, Clang, MSVS or ICC (Linux, macOS, Windows)
-        \item \pause CPython 2.7, CPython 3.x, \alert<7>{PyPy} \pause
-        \item \pause Support for \cpp{11}, \cpp{14} and \cpp{17} language features
-        \item \pause Support for NumPy without having to include NumPy headers
-        \item \pause Support for embedding Python interpreter
-        \item \pause \small{
-                STL data types, overloaded functions, enumerations,
-                callbacks, iterators and ranges, single and multiple inheritance,
-                smart pointers, custom operators, automatic refcounting, capturing
-                lambdas, function vectorization, arbitrary exception types, virtual
-                class wrapping, etc \ldots
-            }
-    \end{itemize}
-
-    Link: \url{http://github.com/pybind/pybind11}
-
-\end{frame}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\section{Hello, World!}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\begin{frame}[fragile]{First things first}
-
-    Requirements:
-
-    \begin{itemize}
-        \item CPython 2.7.x, 3.x or PyPy $\geqslant 5.7$, with headers
-        \item \pybind package installed (\mono{pip install pybind11})
-        \item Non-ancient compiler (Clang $\geqslant 3.3$, GCC $\geqslant 4.8$, MSVS $\geqslant 2015$)
-    \end{itemize}
+    \begin{pythoncode}
+        >>> dict = {'name': 'Alice', 'age': 25}
+    \end{pythoncode}
 
     \pause
 
-    Boilerplate (will be omitted in most further examples):
-
-    \begin{cppcode}
-        #include <pybind11/pybind11.h>
-
-        namespace py = pybind11;
-
-        PYBIND11_MODULE(example, m) {
-            ...
-        }
-    \end{cppcode}
-
-\end{frame}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\begin{frame}[fragile]{Let's write a module}
-
-    Let's bind a \mono{C} function that adds two integers:
-
-    \begin{cppcode}
-        int add(int a, int b) {
-            return a + b;
-        }
-
-        PYBIND11_MODULE(myadd, m) {
-            m.def("add", &add, "Add two integers.");
-        }
-    \end{cppcode}
+    \begin{pythoncode}
+        # Retrieve entry
+        >>> dict['age']
+        25
+    \end{pythoncode}
 
     \pause
 
-    \ldots or, \cpp{11} style:
-
-    \begin{cppcode}
-        PYBIND11_MODULE(myadd, m) {
-            m.def("add", [](int a, int b) { return a + b; },
-                  "Add two integers.");
-        }
-    \end{cppcode}
-
-\end{frame}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\begin{frame}[fragile]{Trying it out}
-
-    After the code is compiled, it can be used like a normal Python module:
-
     \begin{pythoncode}
-        >>> from myadd import add
+        # Add or change entry
+        >>> dict['city'] = 'Lausanne'
 
-        >>> help(add)
-        add(arg0: int, arg1: int) -> int
-
-        Add two integers.
-
-        >>> add(1, 2)
-        3
-
-        >>> add('foo', 'bar')
-        TypeError: add(): incompatible function arguments.
-        The following argument types are supported:
-            1. (arg0: int, arg1: int) -> int
-
-        Invoked with: 'foo', 'bar'
+        # Delete entry
+        >>> del dict['age']
     \end{pythoncode}
-
-\end{frame}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\begin{frame}{Compiling a module}
-
-    There's a few possible ways to build a \pybind module...
-
-\end{frame}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\begin{frame}[fragile]{Compiling a module -- manually}
-
-    \textbf{Linux} (Python 3):
-
-    \begin{shcode}
-        $ c++ -O3 -shared -std=c++11 -fPIC
-            $(python -m pybind11 --includes) myadd.cpp
-            -o myadd$(python3-config --extension-suffix)
-    \end{shcode}
-
-    If the build succeeds, it will create a binary module like this:
-
-    \begin{shcode}
-        myadd.cpython-36m-x86_64-linux-gnu.so
-    \end{shcode}
-
-    \textbf{macOS}: same as above, plus \mono{-undefined dynamic_lookup} flag.
-
-    \textbf{Windows}: possible but not fun.
-
-\end{frame}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\begin{frame}[fragile]{Compiling a module -- distutils}
-
-    Integrating into \mono{setup.py}:
-
-    \begin{pythoncode}
-        from setuptools import setup, Extension
-        from setuptools.command import build_ext
-        from pybind11 import get_include
-
-        setup(
-            ...,
-            ext_modules=[
-                Extension(
-                    'myadd', ['myadd.cpp'],
-                    include_dirs=[get_include()],
-                    language='c++',
-                    extra_compile_args=['-std=c++11']
-                )
-            ],
-            cmdclass={'build_ext': build_ext.build_ext}
-        )
-    \end{pythoncode}
-
-\end{frame}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\begin{frame}[fragile]{Compiling a module -- ipybind}
-
-    % TODO: add ipybind url
-    In IPython console or Jupyter notebook (requires installing \mono{ipybind}):
-
-    \begin{pythoncode}
-        %load_ext ipybind
-    \end{pythoncode}
-
-    \begin{pythoncode}
-        %%pybind11
-
-        PYBIND11_MODULE(myadd, m) {
-            m.def("add", [](int a, int b) { return a + b; },
-                  "Add two integers.");
-        }
-    \end{pythoncode}
-
-    After the module is built, its contents are imported automatically:
-
-    \begin{pythoncode}
-        >>> add(1, 2)
-        3
-    \end{pythoncode}
-
-\end{frame}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\begin{frame}[fragile]{Compiling a module -- CMake}
-
-    In a CMake project:
-
-    \begin{shcode}
-        pybind11_add_module(myadd myadd.cpp)
-    \end{shcode}
-
-\end{frame}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\section{Simple classes}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\begin{frame}[fragile]{\cpp{} example class}
-
-    Let's create Python bindings for a simple HTTP response class:
-
-    \begin{cppcode}
-        #include <string>
-
-        struct Response {
-            int status;
-            std::string reason;
-            std::string text;
-
-            Response(int status,
-                     std::string reason,
-                     std::string text = "")
-                : status(status)
-                , reason(std::move(reason))
-                , text(std::move(text))
-            {}
-
-            Response() : Response(200, "OK")  {}
-        };
-    \end{cppcode}
-
-\end{frame}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\begin{frame}[fragile]{Binding the type}
-
-    \begin{cppcode}
-        struct Response {
-            ...
-        }
-    \end{cppcode}
-
-    \pause \darrow
-
-    \begin{cppcode}
-        PYBIND11_MODULE(response, m) {
-            @\hlcode{py::class_}@<Response>(m, "Response");
-        }
-    \end{cppcode}
-
-\end{frame}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\begin{frame}[fragile]{Constructors}
-
-    \begin{cppcode}
-        struct Response {
-            ...
-            Response(int status,
-                     std::string reason,
-                     std::string text = "");
-            Response();
-        };
-    \end{cppcode}
-
-    \pause \darrow
-
-    \begin{cppcode}
-        py::class_<Response>(m, "Response")
-            @\hlcode{.def}@(py::init<>())
-            @\hlcode{.def}@(py::init<int, std::string>())
-            @\hlcode{.def}@(py::init<int, std::string, std::string>());
-    \end{cppcode}
-
-\end{frame}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\begin{frame}[fragile]{Instance attributes}
-
-    \begin{cppcode}
-        struct Response {
-            ...
-            int status;
-            std::string reason;
-            std::string text;
-        };
-    \end{cppcode}
-
-    \pause \darrow
-
-    \begin{cppcode}
-        py::class_<Response>(m, "Response")
-            ...
-            @\hlcode{.def_readonly}@("status", &Response::status)
-            @\hlcode{.def_readonly}@("reason", &Response::reason)
-            @\hlcode{.def_readonly}@("text", &Response::text);
-    \end{cppcode}
-
-\end{frame}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\begin{frame}[fragile]{Properties}
-
-    \begin{cppcode}
-        struct Response {
-            ...
-            bool ok() const {
-                return status >= 200 && status < 400;
-            }
-        };
-    \end{cppcode}
-
-    \pause \darrow
-
-    \begin{cppcode}
-        py::class_<Response>(m, "Response")
-            ...
-            @\hlcode{.def_property_readonly}@("ok", &Response::ok);
-    \end{cppcode}
-
-\end{frame}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\begin{frame}[fragile]{Operators}
-
-    \begin{cppcode}
-        bool operator==(const Response& r1,
-                        const Response& r2) {
-            return r1.status == r2.status
-                && r1.reason == r2.reason
-                && r1.text == r2.text;
-        }
-    \end{cppcode}
-
-    \pause \darrow
-
-    \begin{cppcode}
-        py::class_<Response>(m, "Response")
-            ...
-            @\hlcode{.def}@("__eq__", [](const Response& self,
-                              const Response& other) {
-                return self == other;
-            });
-    \end{cppcode}
-
-\end{frame}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\begin{frame}[fragile]{Operators (\mono{py::self})}
-
-    Wrapping operators is a very common thing to do:
-
-    \begin{cppcode}
-        ...
-
-        .def("__eq__", [](const Response& self,
-                          const Response& other) {
-            return self == other;
-        }, py::is_operator())
-    \end{cppcode}
 
     \pause
 
-    \ldots so there's a shortcut:
-
-    \begin{cppcode}
-        #include <pybind11/operators.h>
-
-        ...
-
-        .def(py::self == py::self)
-    \end{cppcode}
-
-    (also works with arithmetic operators, binary operators, etc.)
+    \begin{pythoncode}
+        >>> dict
+        {'name': 'Alice', 'city': 'Lausanne'}
+    \end{pythoncode}
 
 \end{frame}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\begin{frame}[fragile]{Methods}
-
-    Define string representation via \mono{__repr__()}:
-
-    \begin{cppcode}
-        py::class_<Response>(m, "Response")
-            ...
-            @\hlcode{.def}@("__repr__", [](const Response& self) {
-                return std::string()
-                    + "<" + std::to_string(self.status)
-                    + ": " + self.reason + ">";
-            });
-    \end{cppcode}
-
-\end{frame}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\begin{frame}[fragile]{Full binding code}
-
-    \begin{cppcode}
-        #include <pybind11/operators.h>
-
-        PYBIND11_MODULE(response, m) {
-            py::class_<Response>(m, "Response")
-                .def(py::init<>())
-                .def(py::init<int, std::string>())
-                .def(py::init<int, std::string, std::string>())
-                .def_readonly("status", &Response::status)
-                .def_readonly("reason", &Response::reason)
-                .def_readonly("text", &Response::text)
-                .def_property_readonly("ok", &Response::ok)
-                .def("__repr__", [](const Response& self) {
-                    return std::string()
-                        + "<" + std::to_string(self.status)
-                        + ": " + self.reason + ">";
-                })
-                .def(py::self == py::self);
-        }
-    \end{cppcode}
-
-\end{frame}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\begin{frame}[fragile]{Trying it out}
+\begin{frame}[fragile]{Dictionaries}
 
     \begin{pythoncode}
-        >>> from response import Response
-
-        >>> Response()
-        <200: OK>
-
-        >>> Response().ok
+        # Test if key exists
+        >>> 'name' in dict
         True
+    \end{pythoncode}
 
-        >>> r = Response(404, 'Not Found')
+    \pause
 
-        >>> r.reason
-        'Not Found'
+    \begin{pythoncode}
+        # Get list of keys
+        >>> dict.keys()
+        dict_keys(['name', 'city'])
+    \end{pythoncode}
 
-        >>> r.ok
+    \pause
+
+    \begin{pythoncode}
+        # Get list of values
+        >>> dict.values()
+        dict_values(['Alice', 'Lausanne'])
+    \end{pythoncode}
+
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}[fragile]{Dictionaries - Map comprehensions}
+
+    TODO
+
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}[fragile]{Tuples}
+
+    \begin{pythoncode}
+        # Assignment / packing
+        >>> tuple = 123, 'abc', 1+5j
+    \end{pythoncode}
+
+    \pause
+
+    \begin{pythoncode}
+        # Immutable!
+        >>> tuple[1] = 'xyz'
+        Traceback (most recent call last):
+          File "<stdin>", line 1, in <module>
+        TypeError: 'tuple' object does not support item assignment
+    \end{pythoncode}
+
+    \pause
+
+    \begin{pythoncode}
+        # Unpacking
+        u, v, w = tuple
+    \end{pythoncode}
+
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Functions}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}[fragile]{Functions}
+
+    Simple function definition:
+
+    \begin{pythoncode}
+        >>> def f(a, b):
+        ...     return a * b
+
+        >>> f(3, 5)
+        15
+    \end{pythoncode}
+
+    \pause
+
+    Optional arguments and multiple return values:
+
+    \begin{pythoncode}
+        >>> def g(a, b, c=0):
+        ...     return a*b - c, a*b + c
+        >>> g(3, 5)
+        (15, 15)
+
+        # Using tuple unpacking again
+        >>> a, b = g(2, 5, 6)  # equivalent to g(2, 5, c=6)
+        >>> print(a, b)
+        4, 16
+    \end{pythoncode}
+
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}[fragile]{Function - Arguments}
+
+    \begin{itemize}
+        \item Arguments are passed as values
+        \item \pause Be careful of sneaky bugs!
+    \end{itemize}
+
+    \pause
+
+    \begin{pythoncode}
+        >>> def h(scalar, array):
+        ...     scalar = 9.0
+        ...     array[1] = 13
+
+        >>> a = 5.0; l = [1, 2, 3]
+        >>> h(a, l)
+        >>> print(a, l)
+        5.0 [1, 13, 3]
+    \end{pythoncode}
+
+    \begin{itemize}
+        \item \pause \texttt{l} is actually a reference (passed as an argument)!
+    \end{itemize}
+
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Control Flow}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}[fragile]{Control Flow - Conditional Statements}
+
+    \begin{pythoncode}
+        >>> 25
+        >>> if x < 0:
+        ...     print("Negative")
+        ... elif x == 0:
+        ...     print("Zero")
+        ... else:
+        ...     print("Positive")
+        ...
+        Positive
+
+    \end{pythoncode}
+
+    \begin{itemize}
+        \item \pause No parenthesis, no braces
+        \item \pause Be careful of indentation
+    \end{itemize}
+
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}[fragile]{Control Flow - Loops}
+
+    Iterate over lists:
+
+    \begin{pythoncode}
+        >>> for x in ['a', 'b']:
+        ...     print(x)
+
+        a
+        b
+    \end{pythoncode}
+
+    \pause
+
+    \begin{pythoncode}
+        >>> i = 0
+        >>> while i < 4:
+        ...     # ...
+        ...     i += 1
+    \end{pythoncode}
+
+    Equivalent, but more concise:
+
+    \begin{pythoncode}
+        >>> for i in range(4):
+        ...     # ...
+    \end{pythoncode}
+
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}[fragile]{Control Flow - Loops}
+
+    Special functions for lists:
+
+    \begin{pythoncode}
+        >>> for idx, val in enumerate(['a', 'b']):
+        ...     print(idx, val)
+
+        0 a
+        1 b
+    \end{pythoncode}
+
+    \pause
+
+    ... and dictionaries:
+
+    \begin{pythoncode}
+        >>> dict = {'name': 'Alice', 'age': 25}
+        >>> for key, val in dict.items():
+        ...     print(key, val)
+
+        name Alice
+        age 25
+    \end{pythoncode}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Misc}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}[fragile]{Arithmetic operators}
+
+    \begin{pythoncode}
+        # +, -, /, //, *, **
+        >>> 1 + 2
+        3
+    \end{pythoncode}
+
+    \pause
+
+    Floating point vs. integer division:
+
+    \begin{pythoncode}
+        >>> 2 / 3
+        0.6666666666666666
+
+        >>> 2 // 3
+        0
+    \end{pythoncode}
+
+    \pause
+
+    Exponentiation:
+
+    \begin{pythoncode}
+        >>> 2 ** 3
+        8
+    \end{pythoncode}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}[fragile]{Boolean operators}
+
+    \begin{pythoncode}
+        >>> True and False
         False
+    \end{pythoncode}
 
-        >>> Response(200, 'OK') == Response()
+    \pause
+
+    \begin{pythoncode}
+        >>> True or False
+        True
+    \end{pythoncode}
+
+    \pause
+
+    \begin{pythoncode}
+        >>> not False
+        True
+    \end{pythoncode}
+
+    \pause
+
+    \begin{pythoncode}
+        >>> 1 == 2
+        False
+    \end{pythoncode}
+
+    \begin{pythoncode}
+        >>> 1 != 4
         True
     \end{pythoncode}
 
 \end{frame}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\section{Function signatures}
+\begin{frame}[fragile]{Console output}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\begin{frame}[fragile]{Docstrings and argument names}
-
-    Docstrings can be set by passing string literals to \mono{def()}.\\
-    Arguments can be named via \mono{py::arg("...")}.
-
-    \begin{cppcode}
-        m.def("greet", [](const std::string& name) {
-                py::print("Hello, " + name + ".");
-            },
-            "Greet a person.",
-            py::arg("name")
-        );
-    \end{cppcode}
+    \begin{pythoncode}
+        >>> print("Hello World!")
+        Hello World!
+    \end{pythoncode}
 
     \pause
 
+    Formatted strings (similar to \texttt{printf} in C):
+
     \begin{pythoncode}
-        >>> greet('stranger')
-        Hello, stranger.
-
-        >>> greet?
-        greet(name: str) -> None
-
-        Greet a person.
+        >>> print("Int: %d, Float: %f, String: %s" % (5, 3.14, 'foo'))
+        Int: 5, Float: 3.140000, String: foo
     \end{pythoncode}
+
 \end{frame}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\begin{frame}[fragile]{Keyword arguments with default values}
+\begin{frame}[fragile]{Packages}
 
-    Default argument values can be set by assigning to \mono{py::arg()}.
+    Load more functionality from (external) packages / files:
 
-    \begin{cppcode}
-        m.def("greet", [](const std::string& name, int times) {
-                for (int i = 0; i < times; ++i)
-                    py::print("Hello, " + name + ".");
-            },
-            "Greet a person.",
-            py::arg("name"), py::arg("times") = 1
-        );
-    \end{cppcode}
+    \begin{pythoncode}
+        >>> import numpy
+        >>> numpy.pi
+        3.141592653589793
+    \end{pythoncode}
 
     \pause
 
+    Attention: This overwrites any prior definition of \texttt{pi}!
     \begin{pythoncode}
-        >>> greet('Jeeves')
-        Hello, Jeeves.
-
-        >>> greet('Wooster', times=2)
-        Hello, Wooster.
-        Hello, Wooster.
+        >>> from numpy import pi
+        >>> pi
+        3.141592653589793
     \end{pythoncode}
-\end{frame}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\begin{frame}[fragile]{Python objects as arguments}
-
-    Functions can take arbitrary Python objects as arguments:
-
-    \begin{cppcode}
-        m.def("count_strings", [](py::list list) {
-            int n = 0;
-            for (auto item : list)
-                if (py::isinstance<py::str>(item))
-                    n++;
-            return n;
-        });
-    \end{cppcode}
 
     \pause
 
+    Often a good ideas to keep things in their own namespaces instead:
     \begin{pythoncode}
-        >>> count_strings(['foo', 'bar', 1, {}, 'baz'])
-        3
+        >>> import numpy as np
+        >>> np.pi
+        3.141592653589793
     \end{pythoncode}
-\end{frame}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\begin{frame}[fragile]{*args and **kwargs}
-
-    Variadic positional and keyword arguments can be passed via
-    \mono{py::args} (subclass of \mono{py::tuple}) and \mono{py::kwargs}
-    (subclass of \mono{py::dict}):
-
-    \begin{cppcode}
-        m.def("count_args", [](py::args a, py::kwargs kw) {
-            py::print(a.size(), "args,", kw.size(), "kwargs");
-        });
-    \end{cppcode}
-
-    \pause
-
-    \begin{pythoncode}
-        >>> count_args(10, 20, 30, x='a', y='b')
-        3 args, 2 kwargs
-    \end{pythoncode}
-\end{frame}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\begin{frame}[fragile]{Function overloads}
-
-    It is possible to bind multiple \cpp{} overloads to a single
-    Python name:
-
-    \begin{cppcode}
-        m.def("f", [](int x) { return "int"; });
-        m.def("f", [](float x) { return "float"; });
-    \end{cppcode}
-
-    \pause
-
-    \begin{pythoncode}
-        >>> f(42)
-        'int'
-
-        >>> f(3.14)
-        'float'
-
-        >>> f('cat')
-        TypeError: f(): incompatible function arguments.
-        The following argument types are supported:
-            1. (arg0: int) -> str
-            2. (arg0: float) -> str
-    \end{pythoncode}
-\end{frame}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\section{Everything else}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\begin{frame}[fragile]{Type conversions}
-
-    Three ways to communicate objects between \cpp{} and Python:
-
-    \begin{enumerate}
-        \item \pause
-            \textcolor{dgreen}{native} in \cpp{},
-            \textcolor{dred}{wrapper} in Python:
-
-            \smallskip
-            \begin{cppcode}
-                py::class_<Foo>(m, "Foo");
-                m.def("f1", [](const Foo& foo) { ... });
-            \end{cppcode}
-
-        \item \pause
-            \textcolor{dred}{wrapper} in \cpp{},
-            \textcolor{dgreen}{native} in Python:
-
-            \smallskip
-            \begin{cppcode}
-                m.def("f2", [](py::list list) { ... });
-            \end{cppcode}
-
-        \item \pause
-            \textcolor{dgreen}{native} in \cpp{},
-            \textcolor{dgreen}{native} in Python
-            (\textit{type conversion}):
-
-            \smallskip
-            \begin{cppcode}
-                m.def("f3", [](int x) { ... });
-                m.def("f4", [](const std::string& s) { ... });
-                m.def("f5", [](const std::vector<int>& v) { ... });
-            \end{cppcode}
-
-            (always requires a \textit{copy})
-    \end{enumerate}
 
 \end{frame}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\begin{frame}{Built-in conversions}
-
-    Some of the supported \cpp{} types:
+\begin{frame}[fragile]{References}
 
     \begin{itemize}
-        \item Scalar: integer types, \mono{float}, \mono{double}, \mono{bool}, \mono{char}
-        \item Strings: \mono{std::string}, \mono{const char *}
-        \item Tuples: \mono{std::pair<F, S>}, \mono{std::tuple<...>}
-        \item Sequences: \mono{std::vector<T>}, \mono{std::list<T>}, \mono{std::array<T, n>}
-        \item Maps: \mono{std::map<K, V>}, \mono{std::unordered_map<K, V>}
-        \item Sets: \mono{std::set<T>}, \mono{std::unordered_set<T>}
-        \item Polymorphic functions: \mono{std::function<...>}
-        \item Date/time: \mono{std::chrono::duration}, \mono{std::chrono::time_point}
-        \item Optional: \mono{std::optional<T>}, \mono{std::experimental::optional<T>}
+        \item Documentation\\
+            \url{https://docs.python.org/3/}
+        \item \pause Official python3 tutorial:\\
+            \url{https://docs.python.org/3.1/tutorial/index.html}
+        \item \pause ...
+
     \end{itemize}
 
-\end{frame}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\begin{frame}[fragile]{Classes}
-    \begin{itemize}
-        \item \pause Single and multiple inheritance.
-        \item \pause Overriding \cpp{} virtual methods from Python.
-        \item \pause Custom constructors:
-            \smallskip
-            \begin{cppcode}
-                py::class<A>(m, "A")
-                    .def("__init__", [](A& self, int arg) {
-                        new (&self) A(arg);  // py::init<int>()
-                    });
-            \end{cppcode}
-        \item \pause Implicit conversions:
-            \smallskip
-            \begin{cppcode}
-                py::class_<A>(m, "A");
-                py::class_<B>(m, "B")
-                    .def(py::init<A>());
-                py::implicitly_convertible<A, B>();
-                m.def("f", [](const B& arg) { ... });
-            \end{cppcode}
-        \item \pause Operator overloading, \mono{py::self} helper.
-        \item \pause Static methods, properties, attributes.
-    \end{itemize}
-\end{frame}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\begin{frame}[fragile]{Python interface}
-    \begin{itemize}
-        \item \pause Objects with / without refcounting
-            (\mono{py::object} / \mono{py::handle})
-        \item \pause Built-in types (\mono{py::int_}, \mono{py::list},
-            \mono{py::module}, \mono{py::function}, \ldots)
-        \item \pause Casting: \mono{py::cast(cpp_obj)}, \mono{py_obj.cast<T>()}.
-        \item \pause Calling Python functions via \mono{()},
-            \mono{*args} and \mono{**kwargs} unpacking:
-
-            \smallskip
-            \begin{cppcode}
-                using namespace pybind11::literals;
-                auto ship = py::make_tuple("USS Enterprise", 1701);
-                auto bridge = py::dict("Jim"_a=1, "Spock"_a=2);
-                auto others = py::dict("Scotty"_=4);
-                py::function engage = ...;
-                engage(*ship, **bridge, "McCoy"_a=3, **others);
-            \end{cppcode}
-
-        \item \pause Import modules -- \mono{py::module::import()}.
-        \item \pause \mono{print()} function -- \mono{py::print()}.
-        \item \pause \mono{str.format()} method -- \mono{py::str::format()}.
-        \item \pause \mono{py::len()}, \mono{py::isinstance<>()}, etc.
-        \item \pause Run Python code -- \mono{py::eval()}, \mono{py::eval_file()}.
-    \end{itemize}
-\end{frame}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\begin{frame}[fragile]{Buffer protocol and NumPy}
-    \begin{itemize}
-        \item \pause Buffer protocol for a type: \mono{.def_buffer()}.
-        \item \pause \mono{py::buffer}, \mono{py::memoryview}.
-        \item \pause NumPy: \mono{py::array}, \mono{py::array_t<T>}.
-        \item \pause Checked (default) or unchecked element access.
-        \item \pause Fast access to array properties via NumPy C API.
-        \item \pause Support for registering structured NumPy dtypes.
-        \item \pause Automatic function vectorization (\mono{py::vectorize}).
-        \item \pause Also: Eigen support.
-    \end{itemize}
-\end{frame}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\begin{frame}[fragile]{... and a few other things}
-    \begin{itemize}
-        \item \pause Return value policies (\mono{copy}, \mono{move},
-            \mono{reference}, \mono{reference_internal},
-            \mono{automatic}, \mono{automatic_reference}).
-        \item \pause Call policies: \mono{py::keep_alive<Nurse, Patient>}.
-        \item \pause Automatic translation of built-in exceptions.
-        \item \pause Custom exception translators.
-        \item \pause Smart pointers and custom holder types.
-        \item \pause \pybind runtime: capsule, registered types map,
-            registered instances map.
-    \end{itemize}
-\end{frame}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\section{Functions and callbacks}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\begin{frame}[fragile]{Functions and callbacks}
-
-    Type conversions for \mono{std::function<...>} can be enabled by
-    including an optional \mono{pybind11/functional.h} header.
-    Python to \cpp{} callback:
-
-    \begin{cppcode}
-        #include <pybind11/functional.h>
-
-        m.def("for_even", [](int n, std::function<void(int)> f) {
-            for (int i = 0; i < n; ++i)
-                if (i % 2 == 0)
-                    f(i);
-        });
-    \end{cppcode}
-
-    \pause
-
-    \begin{pythoncode}
-        >>> def callback(x):
-        ...     print('received:', x)
-
-        >>> for_even(3, callback)
-        received: 0
-        received: 2
-    \end{pythoncode}
-
-\end{frame}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\begin{frame}[fragile]{Higher order functions...}
-
-    \begin{cppcode}
-        using int_fn = std::function<int(int)>;
-
-        int_fn apply_n(int_fn f, int n) {             // f(f(..(x))
-            return [f, n](int x) {
-                for (int i = 0; i < n; ++i)
-                    x = f(x);
-                return x;
-            };
-        }
-
-        m.def("apply_n", apply_n);
-    \end{cppcode}
-
-    \pause
-
-    \begin{pythoncode}
-        >>> def f(x):
-        ...     return x * 2
-
-        >>> g = apply_n(f, 8)
-        >>> g(10)
-        2560
-    \end{pythoncode}
-
-\end{frame}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\begin{frame}[fragile]{... and higher...}
-
-    \begin{cppcode}
-        using int_fn = std::function<int(int)>;
-
-        int_fn @\hlcode{apply_n}@(int_fn f, int n) {             // f(f(..(x))
-            return [f, n](int x) {
-                for (int i = 0; i < n; ++i)
-                    x = f(x);
-                return x;
-            };
-        }
-
-        std::function<int_fn(int_fn)> @\hlcodealt{apply_n}@(int n) { // decorator
-            return [n](int_fn f) {
-                return @\hlcode{apply_n}@(f, n);
-            }
-        }
-
-        m.def("apply_n", py::overload_cast<int_fn, int>(@\hlcode{apply_n}@));
-        m.def("apply_n", py::overload_cast<int>(@\hlcodealt{apply_n}@));
-    \end{cppcode}
-
-\end{frame}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\begin{frame}[fragile]{... decorators?}
-
-    \begin{pythoncode}
-        def f(x):
-            return x * 2
-
-        >>> apply_n(f, 8)(10)
-        2560
-    \end{pythoncode}
-
-    \pause
-
-    \begin{pythoncode}
-        @apply_n(8)
-        def g(x):
-            return x * 2
-
-        >>> g(10)
-        2560
-    \end{pythoncode}
-
-\end{frame}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\section{NumPy example}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\begin{frame}[fragile]{NumPy example: rolling stats}
-
-\begin{minted}[fontsize=\smaller]{cpp}
-#include <pybind11/numpy.h>
-
-struct Stats { double mean; double std; };
-
-auto rolling_stats(py::array_t<double> arr, size_t window) {
-    if (arr.ndim() != 1)
-        throw std::runtime_error("expected 1-D array");
-
-    py::array_t<Stats> stats(arr.size());
-    auto a = arr.unchecked<1>();
-    auto s = stats.mutable_unchecked<1>();
-
-    double sum = 0, sqr = 0;
-    for (size_t i = 0; i < arr.size(); ++i) {
-        if (i >= window) {
-            auto x = a(i - window); sum -= x; sqr -= x * x;
-        }
-        auto x = a(i); sum += x; sqr += x * x;
-        double n = i >= window ? window : (i + 1)
-        double mean = sum / n;
-        s(i) = { mean, std::sqrt((sqr - sum * mean) / (n - 1)) };
-    }
-    return stats;
-}
-
-PYBIND11_MODULE(example, m) {
-    PYBIND11_NUMPY_DTYPE(Stats, mean, std);
-    m.def("rolling_stats", rolling_stats);
-}
-\end{minted}
-
-\end{frame}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\begin{frame}[fragile]{NumPy example: rolling stats}
-
-    \begin{pythoncode}
-        >>> import pandas as pd
-        >>> pd.DataFrame(rolling_stats([1, 4 9, 16, 25], window=2))
-    \end{pythoncode}
-
-    \pause
-
-    \begin{center}
-        \vspace{-0.2cm}\ttfamily\scriptsize
-        \begin{tabular}{lrr} \toprule
-                  & mean & std      \\ \midrule
-                0 &  1.0 &  NaN     \\
-                1 &  2.5 & 2.121320 \\
-                2 &  6.5 & 3.535534 \\
-                3 & 12.5 & 4.949747 \\
-                4 & 20.5 & 6.363961 \\ \bottomrule
-        \end{tabular}
-        \vspace{-0.2cm}
-    \end{center}
-
-    \pause
-
-    Correctness check:
-
-    \begin{pythoncode}
-        import numpy as np
-
-        a = np.random.random(25 * 1000 * 1000)
-        stats = rolling_stats(a, window=1000)
-        rolling = pd.Series(a).rolling(window=1000, min_periods=0)
-
-        assert np.allclose(stats['mean'], rolling.mean())
-        assert np.allclose(stats['std'], rolling.std(), equal_nan=1)
-    \end{pythoncode}
-
-\end{frame}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\begin{frame}[fragile]{NumPy example: rolling stats}
-    Performance check:
-
-    \begin{pythoncode}
-        a = np.random.random(25 * 1000 * 1000)
-        stats = rolling_stats(a, window=1000)
-        rolling = pd.Series(a).rolling(window=1000, min_periods=0)
-    \end{pythoncode}
-
-    \pause \darrow
-
-    \begin{pythoncode}
-        >>> %timeit rolling.mean()
-        1.1 s @$\pm$@ 24.9 ms per loop
-    \end{pythoncode}
-
-    \pause
-
-    \begin{pythoncode}
-        >>> %timeit rolling.std()
-        1.18 s @$\pm$@ 16.3 ms per loop
-    \end{pythoncode}
-
-    \pause
-
-    \begin{pythoncode}
-        >>> %timeit rolling_stats(a, 1000)
-        264 ms @$\pm$@ 4.36 ms per loop
-    \end{pythoncode}
-\end{frame}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\section{Thanks}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\begin{frame}{Thanks}
-    Wenzel Jakob (\mono{@wjakob}) -- for creating this awesome project.
-
-    \pause
-
-    Jason Rhinelander (\mono{@jagerman}) and Dean Moldovan
-    (\mono{@dean0x7d}) -- for maintaining it and adding a metric
-    ton of features and tests.
-
-    \pause
-
-    Jonas Adler, Sylvain Corlay, Trent Houliston, Axel Huebl, \mono{@hulucc},
-    Sergey Lyskov, Johan Mabille, Tomasz Mi\k{a}sko, Ben Pritchard,
-    Boris Sch\"{a}ling, Pim Schellart, Patrick Stewart and myself
-    (\mono{@aldanor}) -- for contributing significant features or improvements.
-
-    \pause
-
-    Dave Abrahams -- for creating Boost.Python.
-
-    \hrulefill
-
-    \pause
-
-    \begin{center}
-        Thanks for listening!
-    \end{center}
 \end{frame}
 
 \end{document}

@@ -51,11 +51,12 @@
 %\colorbox[HTML]{e4e4e4}{\makebox[\textwidth-2\fboxsep][l]{texto}
 \begin{document}
 
-\begin{center}{\huge{\textbf{Python 3 Cheat Sheet}}}\\
+\begin{multicols*}{3}
+%
+\begin{center}{\LARGE{\textbf{Python 3 Cheat Sheet}}}\par
 {\large EPFL CS 328 - Numerical Methods for Visual Computing}
 \end{center}
-\begin{multicols*}{3}
-
+%
 \tikzstyle{mybox} = [draw=black, fill=white, very thick,
     rectangle, rounded corners, inner sep=10pt, inner ysep=10pt]
 \tikzstyle{fancytitle} =[fill=green, text=white, font=\bfseries]
@@ -104,6 +105,10 @@
 %------------ CAIXA PRELIMINARES ---------------------
 \node[fancytitle, right=10pt] at (box.north west) {Biblioteca MatPlotLib};
 \end{tikzpicture}
+
+\vfill\null
+\columnbreak
+
 %------------ CONTEUDO EXEMPLO BASICO ---------------------
 \begin{tikzpicture}
 \node [mybox] (box){%
@@ -121,6 +126,9 @@
 %------------ EXEMPLO BASICO BOX ---------------------
 \node[fancytitle, right=10pt] at (box.north west) {Exemplo básico MatPlotLib:};
 \end{tikzpicture}
+
+
+
 %------------ CONTEUDO DOIS EIXOS ---------------------
 \begin{tikzpicture}
 \node [mybox] (box){%
@@ -194,6 +202,9 @@ picker & usado na seleção da linha interativa
 %------------ PROPRIEDADES BOX ----------------
 \node[fancytitle, right=10pt] at (box.north west) {MatPlotLib - Propriedades para Plotagem};
 \end{tikzpicture}
+
+{\LaTeX} template by Michelle Cristina de Sousa Baltazar.
+
 \end{multicols*}
 \end{document}
 Contact GitHub API Training Shop Blog About
