@@ -65,19 +65,116 @@ Jan Bednarik}
 
 \maketitle
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Introduction}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}{About Python}
+
+% About Python
+
+%why python
+%- high level, fast prototyping, full-stack of packages/tools for scientific computations (often internally implemented in C)
+
+%    CPython \textit{extension module}: Python module not written in Python.
+%
+%    \pause
+%
+%    Most often written in C or \cpp{}.
+%
+%    \pause
+%
+%    \hrulefill
+%
+%    \textit{Why bother?}
+%
+%    \begin{itemize}
+%        \item \pause Interfacing with existing libraries
+%        \item \pause Writing performance-critical code
+%        \item \pause Mirroring library API in Python to aid prototyping
+%        \item \pause Running tests for non-Python libraries in Python
+%    \end{itemize}
+\end{frame}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+\begin{frame}{Installation}
+%    It is possible to write CPython extension modules in pure C, but...
+%
+%    \begin{itemize}
+%        \item \pause Manual refcounting
+%        \item \pause Manual exception handling
+%        \item \pause Boilerplate to define functions and modules
+%        \item \pause High entry barrier, prone to programmer errors
+%        \item \pause Differences in the API between Python versions
+%    \end{itemize}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}{Working with Python}
+
+% Terminal, IPython, Jupyter, IDEs
+
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Language Basics}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}[fragile]{Code structure, Comments}
+%\vspace*{-1.5cm}
+
+	Code structure
+	\begin{itemize}
+		\item \pause Python uses \textbf{indentation} (whitespace) to separate blocks.
+		\item \pause Only relative indentation among blocks matters.
+		\item \pause Consistent indentation within a block.
+	\end{itemize}
+
+	\pause
+    \begin{pythoncode}
+		if a < 5:
+		    print('line one')
+		      print('line two')  # --> IndentationError exception.
+    \end{pythoncode}
+
+    \pause
+
+    Comments
+    \begin{itemize}
+	\item \pause Single-line comments, multi-line comments (docstring)
+    \end{itemize}
+
+	\pause
+	 \begin{pythoncode}
+	# I am a single line comment.
+	""" I am
+	a multi-line comment. """
+	\end{pythoncode}
+
+%    \begin{shcode}
+%        $ cythonize example.pyx
+%    \end{shcode}
+%
+%    \pause \darrow
+%
+%    \begin{shcode}
+%      /\___/\
+%     ( o   o )
+%     (  =^=  )
+%     (        )
+%     (         )
+%     (          )))))))))))
+%    \end{shcode}
+
+\end{frame}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
