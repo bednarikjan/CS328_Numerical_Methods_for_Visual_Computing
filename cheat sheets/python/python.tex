@@ -25,6 +25,8 @@
 \usepackage{mathtools}
 \usepackage{amsmath,amssymb}
 \usepackage{enumitem}
+\usepackage{bold-extra}
+\usepackage{changepage}
 
 \usepackage{minted}
 \usemintedstyle{trac}
@@ -50,29 +52,6 @@
 \newcommand{\hr}{\centerline{\rule{3.5in}{1pt}}}
 %\colorbox[HTML]{e4e4e4}{\makebox[\textwidth-2\fboxsep][l]{texto}
 
-\makeatletter
-\newenvironment{tabminted}{%
-  \let\FV@ListVSpace\relax
-  \begin{pythoncode}
-}{%
-  \endminted
-  \unskip
-  \aftergroup\@tabmintedend
-}
-\newcommand*{\tabminted@finalstrut}[1]{%
-  \ifdim\prevdepth>0pt
-    \ifdim\dp#1>\prevdepth
-      \vskip\dimexpr(\dp#1)-\prevdepth\relax
-    \fi
-  \else
-    \vskip\dimexpr(\dp#1)\relax
-  \fi
-}
-\newcommand*{\@tabmintedend}{%
-  \let\@finalstrut\tabminted@finalstrut
-}
-\makeatother
-
 \renewcommand{\familydefault}{\sfdefault}
 
 \begin{document}
@@ -84,88 +63,458 @@
 \begin{multicols*}{3}
 %
 \begin{center}{\LARGE{\textbf{Python 3 Cheat Sheet}}}\par
-{\large EPFL CS 328 - Numerical Methods for Visual Computing}
+{\large EPFL CS 328\\ Numerical Methods for Visual Computing}\\
+{\footnotesize (Version 1)}
 \end{center}
 
+%============ BASICS ==============================================
 
-%------------ DICTIONARIES ---------------
+%------------ Operators ---------------
 \begin{tikzpicture}
 \node [mybox] (box){%
     \begin{minipage}{0.3\textwidth}
-            \begin{center}\small{\begin{tabular}{lp{5cm} l}
+            Arithmetic operators:
+            \begin{center}\small{\begin{tabular}{lp{4cm} l}
                 \hline
-                Create empty &
+                Addition &
                 \begin{minipage}[t]{\textwidth}
                 \begin{pythoncode}
-                    dict = {}
+                    x + y
                 \end{pythoncode}
                 \end{minipage}
                 \\ \hline
-                Create example &
+                Subtraction &
                 \begin{minipage}[t]{\textwidth}
                 \begin{pythoncode}
-                    dict = {'name': 'Alice', 'age': 25}
+                    x - y
                 \end{pythoncode}
                 \end{minipage}
                 \\ \hline
-                Retrieve entry &
+                Floating point division &
                 \begin{minipage}[t]{\textwidth}
                 \begin{pythoncode}
-                    dict['age']     # Returns 25
+                    x / y
                 \end{pythoncode}
                 \end{minipage}
                 \\ \hline
-                Add / change entry &
+                Integer division &
                 \begin{minipage}[t]{\textwidth}
                 \begin{pythoncode}
-                    dict['city'] = 'Lausanne'
+                    x // y
                 \end{pythoncode}
                 \end{minipage}
                 \\ \hline
-                Delete entry &
+                Multiplication &
                 \begin{minipage}[t]{\textwidth}
                 \begin{pythoncode}
-                    del dict['age']
+                    x * y
                 \end{pythoncode}
                 \end{minipage}
                 \\ \hline
-                Test if key exists &
+                Exponentiation &
                 \begin{minipage}[t]{\textwidth}
                 \begin{pythoncode}
-                    'name' in dict  # Returns True
-                \end{pythoncode}
-                \end{minipage}
-                \\ \hline
-                Number of entries &
-                \begin{minipage}[t]{\textwidth}
-                \begin{pythoncode}
-                    len(dict)
+                    x ** y
                 \end{pythoncode}
                 \end{minipage}
                 \\ \hline
             \end{tabular}}\end{center}
 
+            Boolean operators:
+            \begin{center}\small{\begin{tabular}{lp{4cm} l}
+                \hline
+                And \qquad\qquad\qquad\enspace\enspace\;\; &
+                \begin{minipage}[t]{\textwidth}
+                \begin{pythoncode}
+                    x and y
+                \end{pythoncode}
+                \end{minipage}
+                \\ \hline
+                Or &
+                \begin{minipage}[t]{\textwidth}
+                \begin{pythoncode}
+                    x or y
+                \end{pythoncode}
+                \end{minipage}
+                \\ \hline
+                Negation &
+                \begin{minipage}[t]{\textwidth}
+                \begin{pythoncode}
+                    not x
+                \end{pythoncode}
+                \end{minipage}
+                \\ \hline
+                Unpacking &
+                \begin{minipage}[t]{\textwidth}
+                \begin{pythoncode}
+                    u, v, w = t
+                \end{pythoncode}
+                \end{minipage}
+                \\ \hline
+            \end{tabular}}\end{center}
+    \end{minipage}
+};
+\node[fancytitle, right=10pt] at (box.north west) {Operators};
+\end{tikzpicture}
+
+%------------ Printing ---------------
+\begin{tikzpicture}
+\node [mybox] (box){%
+    \begin{minipage}{0.3\textwidth}
+            Simple print statement:
+            \begin{adjustwidth}{0.5cm}{}
+            \begin{pythoncode}
+                print("Hello!")
+            \end{pythoncode}
+            \end{adjustwidth}
+
+            String formatting:
+            \begin{center}\small{\begin{tabular}{lp{4cm} l}
+                \hline
+                Integers &
+                \begin{minipage}[t]{\textwidth}
+                \begin{pythoncode}
+                    "int: %d" % 5
+                \end{pythoncode}
+                \end{minipage}
+                \\ \hline
+                Floats &
+                \begin{minipage}[t]{\textwidth}
+                \begin{pythoncode}
+                    "float: %f" % 3.14
+                \end{pythoncode}
+                \end{minipage}
+                \\ \hline
+                Strings &
+                \begin{minipage}[t]{\textwidth}
+                \begin{pythoncode}
+                    "str: %s" % "foo"
+                \end{pythoncode}
+                \end{minipage}
+                \\ \hline
+                Multiple values via tuples &
+                \begin{minipage}[t]{\textwidth}
+                \begin{pythoncode}
+                    "two ints: %d %d" % (1, 2)
+                \end{pythoncode}
+                \end{minipage}
+                \\ \hline
+            \end{tabular}}\end{center}
+    \end{minipage}
+};
+\node[fancytitle, right=10pt] at (box.north west) {Printing and strings};
+\end{tikzpicture}
+
+
+{\LaTeX} template by Michelle Cristina de Sousa Baltazar.
+
+% Start next column
+\vfill\null
+\columnbreak
+
+%============ ABSTRACT DATATYPES ==================================
+
+%------------ DICTIONARIES ---------------
+\begin{tikzpicture}
+\node [mybox] (box){%
+    \begin{minipage}{0.3\textwidth}
+        Mapping of key-value pairs.
+        \begin{center}\small{\begin{tabular}{lp{5cm} l}
+            \hline
+            Create empty &
+            \begin{minipage}[t]{\textwidth}
+            \begin{pythoncode}
+                empty_d = {}
+            \end{pythoncode}
+            \end{minipage}
+            \\ \hline
+            Create example &
+            \begin{minipage}[t]{\textwidth}
+            \begin{pythoncode}
+                d = {'name': 'Alice', 'age': 25}
+            \end{pythoncode}
+            \end{minipage}
+            \\ \hline
+            Retrieve entry &
+            \begin{minipage}[t]{\textwidth}
+            \begin{pythoncode}
+                d['age']     # Returns 25
+            \end{pythoncode}
+            \end{minipage}
+            \\ \hline
+            Add / change entry &
+            \begin{minipage}[t]{\textwidth}
+            \begin{pythoncode}
+                d['city'] = 'Lausanne'
+            \end{pythoncode}
+            \end{minipage}
+            \\ \hline
+            Delete entry &
+            \begin{minipage}[t]{\textwidth}
+            \begin{pythoncode}
+                del d['age']
+            \end{pythoncode}
+            \end{minipage}
+            \\ \hline
+            Delete all entries &
+            \begin{minipage}[t]{\textwidth}
+            \begin{pythoncode}
+                d.clear()
+            \end{pythoncode}
+            \end{minipage}
+            \\ \hline
+            Test if key exists &
+            \begin{minipage}[t]{\textwidth}
+            \begin{pythoncode}
+                'name' in d  # Returns True
+            \end{pythoncode}
+            \end{minipage}
+            \\ \hline
+            Number of entries &
+            \begin{minipage}[t]{\textwidth}
+            \begin{pythoncode}
+                len(d)
+            \end{pythoncode}
+            \end{minipage}
+            \\ \hline
+        \end{tabular}}\end{center}
+        %
         Looping through all key-value pairs:
-
+        %
+        \begin{adjustwidth}{0.5cm}{}
         \begin{pythoncode}
-            for key, val in dict.items():
-                # do something..
+                for key, val in d.items():
+                    # do something..
         \end{pythoncode}
-
+        \end{adjustwidth}
+        %
         Similarly, access all keys or values as:
-
+        %
+        \begin{adjustwidth}{0.5cm}{}
         \begin{pythoncode}
-            dict.keys()
-            dict.values()
+                d.keys()
+                d.values()
         \end{pythoncode}
+        \end{adjustwidth}
+        %
     \end{minipage}
 };
 \node[fancytitle, right=10pt] at (box.north west) {Dictionaries};
 \end{tikzpicture}
 
+%------------ TUPLES ---------------
+\begin{tikzpicture}
+\node [mybox] (box){%
+    \begin{minipage}{0.3\textwidth}
+            Immutable list of values.
+            \begin{center}\small{\begin{tabular}{lp{4cm} l}
+                \hline
+                Create empty &
+                \begin{minipage}[t]{\textwidth}
+                \begin{pythoncode}
+                    t = ()
+                \end{pythoncode}
+                \end{minipage}
+                \\ \hline
+                Create with one element &
+                \begin{minipage}[t]{\textwidth}
+                \begin{pythoncode}
+                    t = 123,    # Trailing comma
+                \end{pythoncode}
+                \end{minipage}
+                \\ \hline
+                Create example / packing &
+                \begin{minipage}[t]{\textwidth}
+                \begin{pythoncode}
+                    t = 123, 'abc', 1+5j
+                    # Optional with parenthesis
+                    t = (123, 'abc', 1+5j)
+                \end{pythoncode}
+                \end{minipage}
+                \\ \hline
+                Unpacking &
+                \begin{minipage}[t]{\textwidth}
+                \begin{pythoncode}
+                    u, v, w = t
+                \end{pythoncode}
+                \end{minipage}
+                \\ \hline
+                Unpacking some entries &
+                \begin{minipage}[t]{\textwidth}
+                \begin{pythoncode}
+                    u, _, w = t
+                \end{pythoncode}
+                \end{minipage}
+                \\ \hline
+            \end{tabular}}\end{center}
+    \end{minipage}
+};
+\node[fancytitle, right=10pt] at (box.north west) {Tuples};
+\end{tikzpicture}
 
 
-{\LaTeX} template by Michelle Cristina de Sousa Baltazar.
+%============ FUNCTIONS ===================================
+
+%------------ FUNCTIONS ---------------
+\begin{tikzpicture}
+\node [mybox] (box){%
+    \begin{minipage}{0.3\textwidth}
+            Simple function:
+            \begin{adjustwidth}{0.5cm}{}
+            \begin{pythoncode}
+                def hello():
+                    print("Hello!")
+            \end{pythoncode}
+            \end{adjustwidth}
+            %
+            Function with arguments and a return value:
+            \begin{adjustwidth}{0.5cm}{}
+            \begin{pythoncode}
+                def add(a, b):
+                    return a + b
+            \end{pythoncode}
+            \end{adjustwidth}
+            %
+            Function with a default argument that has multiple return values as a tuple:
+            \begin{adjustwidth}{0.5cm}{}
+            \begin{pythoncode}
+                def f(a, b, c=0):
+                    return a + c, b + c
+            \end{pythoncode}
+            \end{adjustwidth}
+            %
+    \end{minipage}
+};
+\node[fancytitle, right=10pt] at (box.north west) {Functions};
+\end{tikzpicture}
+
+%============ CONTROL FLOW ===================================
+
+%------------ Conditionals ---------------
+\begin{tikzpicture}
+\node [mybox] (box){%
+    \begin{minipage}{0.3\textwidth}
+            Conditional tests:
+            \vspace*{-\baselineskip}
+            \begin{center}\small{\begin{tabular}{lp{4cm} l}
+                \hline
+                equal / not equal &
+                \begin{minipage}[t]{\textwidth}
+                \begin{pythoncode}
+                    x == 25 , x != 25
+                \end{pythoncode}
+                \end{minipage}
+                \\ \hline
+                greater / smaller than &
+                \begin{minipage}[t]{\textwidth}
+                \begin{pythoncode}
+                    x > 25 ,  x < 25
+                \end{pythoncode}
+                \end{minipage}
+                \\ \hline
+                greater /smaller or equal to &
+                \begin{minipage}[t]{\textwidth}
+                \begin{pythoncode}
+                    x >= 25 , x <= 25
+                \end{pythoncode}
+                \end{minipage}
+                \\ \hline
+            \end{tabular}}\end{center}
+
+            \emph{If} statement:
+            \begin{adjustwidth}{0.5cm}{}
+            \begin{pythoncode}
+                if x >= 0:
+                    print("Non-negative")
+            \end{pythoncode}
+            \end{adjustwidth}
+
+            \emph{If-elif-else} statement:
+            \begin{adjustwidth}{0.5cm}{}
+            \begin{pythoncode}
+                if x < 0:
+                    print("Negative")
+                elif x == 0:
+                    print("Zero")
+                else:
+                    print("Positive")
+            \end{pythoncode}
+            \end{adjustwidth}
+    \end{minipage}
+};
+\node[fancytitle, right=10pt] at (box.north west) {Conditional Statements};
+\end{tikzpicture}
+
+%------------ Loops ---------------
+\begin{tikzpicture}
+\node [mybox] (box){%
+    \begin{minipage}{0.3\textwidth}
+            Use \emph{for} to iterate over lists:
+            \begin{adjustwidth}{0.5cm}{}
+            \begin{pythoncode}
+                for x in [1, 2, 3]:
+                    print(x)
+            \end{pythoncode}
+            \end{adjustwidth}
+
+            Otherwise, use \emph{while} loops:
+            \begin{adjustwidth}{0.5cm}{}
+            \begin{pythoncode}
+                i = 0
+                while i < 3:
+                    print(x)
+                    i += 1
+            \end{pythoncode}
+            \end{adjustwidth}
+    \end{minipage}
+};
+\node[fancytitle, right=10pt] at (box.north west) {Loops};
+\end{tikzpicture}
+
+%------------ Import ---------------
+\begin{tikzpicture}
+\node [mybox] (box){%
+    \begin{minipage}{0.3\textwidth}
+            Import entire module:
+            \begin{adjustwidth}{0.5cm}{}
+            \begin{pythoncode}
+                >>> import math
+                >>> math.sqrt(2)
+                1.4142135623730951
+            \end{pythoncode}
+            \end{adjustwidth}
+
+            Import specific functions:
+            \begin{adjustwidth}{0.5cm}{}
+            \begin{pythoncode}
+                >>> from math import sqrt
+                >>> sqrt(2)
+                1.4142135623730951
+            \end{pythoncode}
+            \end{adjustwidth}
+
+            Giving a module (or functions) an alias:
+            \begin{adjustwidth}{0.5cm}{}
+            \begin{pythoncode}
+                >>> import math as m
+                >>> m.sqrt(2)
+                1.4142135623730951
+            \end{pythoncode}
+            \end{adjustwidth}
+
+            Importing all functions from a module:
+            \begin{adjustwidth}{0.2cm}{}
+            \footnotesize{(Don't do this! It can result in naming conflicts.)}
+            \end{adjustwidth}
+            \begin{adjustwidth}{0.5cm}{}
+            \begin{pythoncode}
+                >>> from math import *
+            \end{pythoncode}
+            \end{adjustwidth}
+    \end{minipage}
+};
+\node[fancytitle, right=10pt] at (box.north west) {Importing modules};
+\end{tikzpicture}
 
 \newpage
 %
