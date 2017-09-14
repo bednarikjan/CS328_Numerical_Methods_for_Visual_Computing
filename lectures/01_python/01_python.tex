@@ -126,10 +126,7 @@ Jan Bednarik}
 \section{Language Basics}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
 \begin{frame}[fragile]{Code structure, Comments}
-%\vspace*{-1.5cm}
-
 	Code structure
 	\begin{itemize}
 		\item \pause Python uses \textbf{indentation} (whitespace) to separate blocks.
@@ -139,9 +136,9 @@ Jan Bednarik}
 
 	\pause
     \begin{pythoncode}
-		if a < 5:
-		    print('line one')
-		      print('line two')  # --> IndentationError exception.
+		>>> if a < 5:
+		...    print('line one')
+		...      print('line two') # --> IndentationError exception.
     \end{pythoncode}
 
     \pause
@@ -157,22 +154,62 @@ Jan Bednarik}
 	""" I am
 	a multi-line comment. """
 	\end{pythoncode}
+\end{frame}
 
-%    \begin{shcode}
-%        $ cythonize example.pyx
-%    \end{shcode}
-%
-%    \pause \darrow
-%
-%    \begin{shcode}
-%      /\___/\
-%     ( o   o )
-%     (  =^=  )
-%     (        )
-%     (         )
-%     (          )))))))))))
-%    \end{shcode}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}[fragile]{Data Types - Basics}
+	\begin{itemize}
+	\item \pause Every value has a data type.
+	\item \pause But you don't declare it, Python infers it from \textbf{assignment}.
+	\end{itemize}
 
+	 \begin{pythoncode}
+		>>> my_var = 12.17   # "my_var" is treated as float
+	\end{pythoncode}
+
+	\pause
+	Native Python data types:
+	
+	 \begin{pythoncode}
+		>>> i = 42      # int
+		>>> f = 3.14159 # float
+		>>> c = 2 + 3j  # complex
+		>>> b = True    # bool
+		>>> s = 'spam'  # str
+		>>> n = None    # NoneType (think of as "null")
+	\end{pythoncode}
+
+	\pause
+	More complex native data types: tuple, set, list, dict
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}[fragile]{Data Types - Lifetime, Introspection}
+	
+	\pause
+	The data type can change during runtime.
+	
+	\pause	
+	\begin{pythoncode}
+		>>>  idk = 25      # Python treats "idk" as int.
+		>>>  idk = 'eggs'  # Perfectly valid, now "idk" is str.
+	\end{pythoncode}
+	
+	\pause
+	Checking the data type:
+	\begin{itemize}
+		\item \pause \small{\texttt{type()}, \texttt{dir()}, \texttt{help()}}
+		\item \pause \small{\texttt{instanceof()}}
+	\end{itemize}
+	
+	\pause
+	\begin{pythoncode}
+		>>> val = 2.718
+		>>> type(val)
+		<class float>
+		>>> instanceof(val, float)
+		True
+	\end{pythoncode}
 \end{frame}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -181,12 +218,49 @@ Jan Bednarik}
 \section{Abstract Data Types}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}[fragile]{Lists}
+	\begin{itemize}
+		\item \pause Ordered sequence of elements of arbitrary data types (can be mixed).
+		\item \pause Lists Mutable.
+	\end{itemize}
+	
+	\pause
+	\begin{pythoncode}
+	>>> my_list = ['zero', 1, 2.0, 3 + 0j] 
+	\end{pythoncode}
 
+	\begin{pythoncode}
+		>>> my_list[2]  # Item retrieval (indexing from 0!).
+		2.0
+		>>> my_list[2] = 'two_point_o'  # Item assignment. 
+	\end{pythoncode}
+
+	\begin{pythoncode}
+	>>> len(my_list)  # Querying list length.
+	4
+	\end{pythoncode}
+
+	\begin{pythoncode}
+		>>> my_list.append(4)  # Appending the value to the end.
+		>>> my_list.extend([5, 6])  # Extending by another list.
+		>>> my_list
+		['zero', 1, 'two_point_o', 3 + 0j, 4, 5, 6]
+	\end{pythoncode}	
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}[fragile]{Lists}
+
+	
+
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}[fragile]{Dictionaries}
 
     \begin{itemize}
         \item \pause Unordered set of (\emph{key, value}) pairs
-        \item \pause Keys must be immutable (numbers or strings)
+        \item \pause Keys must be immutable (numbers, strings, tuples)
     \end{itemize}
 
     \pause
@@ -570,6 +644,37 @@ Jan Bednarik}
 \end{frame}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}[fragile]{More on References, Shallow/Deep Copy}
+	
+	\begin{itemize}
+		\item \pause Everything is \textbf{object} in Python.
+		\item \pause Variable stores only \textbf{reference} to the underlying object!
+		\item \pause Assigning one variable to another performs \textbf{shallow copy}.
+	\end{itemize}
+	
+	\pause
+	\begin{pythoncode}
+		>>> A = [1, 2, 3]
+		>>> B = array_A
+		>>> B[1] = 0
+		>>> print(A)
+		[1, 0, 3]
+	\end{pythoncode}
+	
+	\begin{itemize}
+		\item \pause Module \small{\texttt{copy}} can perform \textbf{deep copy}.
+	\end{itemize}
+	\begin{pythoncode}
+		>>> import copy
+		...
+		>>> B = copy.copy(A)
+		>>> B[1] = 0
+		>>> print(A)
+		[1, 2, 3]
+	\end{pythoncode}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \begin{frame}[fragile]{References}
 
@@ -578,6 +683,8 @@ Jan Bednarik}
             \url{https://docs.python.org/3/}
         \item \pause Official python3 tutorial:\\
             \url{https://docs.python.org/3.1/tutorial/index.html}
+        \item \pause All built-in functions\\
+        	\url{https://docs.python.org/3/library/functions.html}
         \item \pause ...
 
     \end{itemize}
