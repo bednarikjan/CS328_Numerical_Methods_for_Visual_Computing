@@ -49,17 +49,126 @@
 \setlength{\footskip}{50px}
 \newcommand{\hr}{\centerline{\rule{3.5in}{1pt}}}
 %\colorbox[HTML]{e4e4e4}{\makebox[\textwidth-2\fboxsep][l]{texto}
+
+\makeatletter
+\newenvironment{tabminted}{%
+  \let\FV@ListVSpace\relax
+  \begin{pythoncode}
+}{%
+  \endminted
+  \unskip
+  \aftergroup\@tabmintedend
+}
+\newcommand*{\tabminted@finalstrut}[1]{%
+  \ifdim\prevdepth>0pt
+    \ifdim\dp#1>\prevdepth
+      \vskip\dimexpr(\dp#1)-\prevdepth\relax
+    \fi
+  \else
+    \vskip\dimexpr(\dp#1)\relax
+  \fi
+}
+\newcommand*{\@tabmintedend}{%
+  \let\@finalstrut\tabminted@finalstrut
+}
+\makeatother
+
+\renewcommand{\familydefault}{\sfdefault}
+
 \begin{document}
+
+\tikzstyle{mybox} = [draw=black, fill=white, very thick,
+    rectangle, rounded corners, inner sep=10pt, inner ysep=10pt]
+\tikzstyle{fancytitle} =[fill=green, text=white, font=\bfseries]
 
 \begin{multicols*}{3}
 %
 \begin{center}{\LARGE{\textbf{Python 3 Cheat Sheet}}}\par
 {\large EPFL CS 328 - Numerical Methods for Visual Computing}
 \end{center}
+
+
+%------------ DICTIONARIES ---------------
+\begin{tikzpicture}
+\node [mybox] (box){%
+    \begin{minipage}{0.3\textwidth}
+            \begin{center}\small{\begin{tabular}{lp{5cm} l}
+                \hline
+                Create empty &
+                \begin{minipage}[t]{\textwidth}
+                \begin{pythoncode}
+                    dict = {}
+                \end{pythoncode}
+                \end{minipage}
+                \\ \hline
+                Create example &
+                \begin{minipage}[t]{\textwidth}
+                \begin{pythoncode}
+                    dict = {'name': 'Alice', 'age': 25}
+                \end{pythoncode}
+                \end{minipage}
+                \\ \hline
+                Retrieve entry &
+                \begin{minipage}[t]{\textwidth}
+                \begin{pythoncode}
+                    dict['age']     # Returns 25
+                \end{pythoncode}
+                \end{minipage}
+                \\ \hline
+                Add / change entry &
+                \begin{minipage}[t]{\textwidth}
+                \begin{pythoncode}
+                    dict['city'] = 'Lausanne'
+                \end{pythoncode}
+                \end{minipage}
+                \\ \hline
+                Delete entry &
+                \begin{minipage}[t]{\textwidth}
+                \begin{pythoncode}
+                    del dict['age']
+                \end{pythoncode}
+                \end{minipage}
+                \\ \hline
+                Test if key exists &
+                \begin{minipage}[t]{\textwidth}
+                \begin{pythoncode}
+                    'name' in dict  # Returns True
+                \end{pythoncode}
+                \end{minipage}
+                \\ \hline
+                Number of entries &
+                \begin{minipage}[t]{\textwidth}
+                \begin{pythoncode}
+                    len(dict)
+                \end{pythoncode}
+                \end{minipage}
+                \\ \hline
+            \end{tabular}}\end{center}
+
+        Looping through all key-value pairs:
+
+        \begin{pythoncode}
+            for key, val in dict.items():
+                # do something..
+        \end{pythoncode}
+
+        Similarly, access all keys or values as:
+
+        \begin{pythoncode}
+            dict.keys()
+            dict.values()
+        \end{pythoncode}
+    \end{minipage}
+};
+\node[fancytitle, right=10pt] at (box.north west) {Dictionaries};
+\end{tikzpicture}
+
+
+
+{\LaTeX} template by Michelle Cristina de Sousa Baltazar.
+
+\newpage
 %
-\tikzstyle{mybox} = [draw=black, fill=white, very thick,
-    rectangle, rounded corners, inner sep=10pt, inner ysep=10pt]
-\tikzstyle{fancytitle} =[fill=green, text=white, font=\bfseries]
 %------------ CONTEÚDO CAIXA RANDOM ---------------
 \begin{tikzpicture}
 \node [mybox] (box){%
@@ -202,8 +311,6 @@ picker & usado na seleção da linha interativa
 %------------ PROPRIEDADES BOX ----------------
 \node[fancytitle, right=10pt] at (box.north west) {MatPlotLib - Propriedades para Plotagem};
 \end{tikzpicture}
-
-{\LaTeX} template by Michelle Cristina de Sousa Baltazar.
 
 \end{multicols*}
 \end{document}
