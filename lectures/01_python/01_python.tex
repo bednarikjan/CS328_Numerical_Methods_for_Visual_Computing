@@ -487,18 +487,8 @@ Jan Bednarik}
     \begin{pythoncode}
         >>> True and False
         False
-    \end{pythoncode}
-
-    \pause
-
-    \begin{pythoncode}
         >>> True or False
         True
-    \end{pythoncode}
-
-    \pause
-
-    \begin{pythoncode}
         >>> not False
         True
     \end{pythoncode}
@@ -506,12 +496,12 @@ Jan Bednarik}
     \pause
 
     \begin{pythoncode}
-        >>> 1 == 2
-        False
-    \end{pythoncode}
+        # Short-circuiting behaviour
+        >>> def fun(i):
+        ...     print("executed")
+        ...     return i
 
-    \begin{pythoncode}
-        >>> 1 != 4
+        >>> True or fun(1)
         True
     \end{pythoncode}
 
