@@ -14,6 +14,7 @@
 \usepackage{texlogos}
 \usepackage{xcolor}
 \usepackage{xspace}
+\usepackage{graphicx}
 
 \usetheme{metropolis}
 \usepackage{appendixnumberbeamer}
@@ -218,10 +219,10 @@ Jan Bednarik}
 \section{Abstract Data Types}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{frame}[fragile]{Lists}
+\begin{frame}[fragile]{Lists - Definition, Retrieval, Update}
 	\begin{itemize}
 		\item \pause Ordered sequence of elements of arbitrary data types (can be mixed).
-		\item \pause Lists Mutable.
+		\item \pause Lists are mutable.
 	\end{itemize}
 	
 	\pause
@@ -230,30 +231,128 @@ Jan Bednarik}
 	\end{pythoncode}
 
 	\begin{pythoncode}
-		>>> my_list[2]  # Item retrieval (indexing from 0!).
+		# Retrieve item (indexing from 0!).
+		>>> my_list[2]  
 		2.0
+		# Change item.
 		>>> my_list[2] = 'two_point_o'  # Item assignment. 
 	\end{pythoncode}
-
-	\begin{pythoncode}
-	>>> len(my_list)  # Querying list length.
-	4
-	\end{pythoncode}
-
-	\begin{pythoncode}
-		>>> my_list.append(4)  # Appending the value to the end.
-		>>> my_list.extend([5, 6])  # Extending by another list.
-		>>> my_list
-		['zero', 1, 'two_point_o', 3 + 0j, 4, 5, 6]
-	\end{pythoncode}	
 \end{frame}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{frame}[fragile]{Lists}
+\begin{frame}[fragile]{Lists - Length, Adding Items}
+	\begin{pythoncode}
+		# Query list length.
+		>>> len(my_list) 
+		4
+	\end{pythoncode}
+
+	\pause
+	\begin{pythoncode}
+		# Append the value to the end.
+		>>> my_list.append(4)  
+		# Extend by another list.
+		>>> my_list.extend([5, 6])  
+		>>> my_list
+		['zero', 1, 'two_point_o', 3 + 0j, 4, 5, 6]
+	\end{pythoncode}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}[fragile]{Lists - Slicing}
+	
+	The powerful way of retrieving sequences of list's items.
+	
+	\pause
+	\begin{pythoncode}
+		a = ['a', 'b', 'c', 'd', 'e']
+	\end{pythoncode}
+	
+	\pause
+	\begin{figure}[!h]
+		\centering
+		\includegraphics[width=0.6\linewidth]{img/slicing.pdf}		
+	\end{figure}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}[fragile]{Lists - Slicing [start:end]}
+
+	\vspace*{-0.1cm}
+	\begin{figure}[!h]
+		\centering
+		\includegraphics[width=0.6\linewidth]{img/slicing.pdf}		
+	\end{figure}
+
+	\vspace*{-0.3cm}
+	\pause
+	Syntax \small{\texttt{[start:end]}}
+	
+	\pause
+	\begin{pythoncode}
+		>>> a[2:4]  # Step = 1.
+		['c', 'd']
+	\end{pythoncode}
+
+	\pause
+	\begin{pythoncode}
+		>>> a[2:]  # End is implicit - up to the last item (incl.)
+		['c', 'd', 'e']
+	\end{pythoncode}
+
+	\pause
+	\begin{pythoncode}
+		>>> a[:3]  # Start is implicit - from the first item (incl.)
+		['a', 'b', 'c']
+	\end{pythoncode}
+
+	\pause
+	\begin{pythoncode}
+		>>> a[1:-1]  # All, but the first and the last.
+		['b', 'c', 'd']
+	\end{pythoncode}		
+\end{frame}
+
 
 	
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}[fragile]{Lists - Slicing [start:end:step]}
+	
+	\vspace*{-0.1cm}
+	\begin{figure}[!h]
+		\centering
+		\includegraphics[width=0.6\linewidth]{img/slicing.pdf}		
+	\end{figure}
 
+	\vspace*{-0.3cm}
+	\pause
+	Syntax \small{\texttt{[start:end:step]}}
+	
+	\pause
+	\begin{pythoncode}
+		>>> a[1:5:2]  # Every second letter.
+		['b', 'd']
+	\end{pythoncode}
+	
+	\pause
+	\begin{pythoncode}
+		>>> a[4:1:-2]  # Negative step -> going backwards.
+		['e', 'd', 'c']
+	\end{pythoncode}
+	
+	\pause
+	\begin{pythoncode}
+		>>> a[::]  # Implicit start=0, end=5, step=1
+		['a', 'b', 'c', 'd', 'e']
+	\end{pythoncode}
+	
+	\pause
+	\begin{pythoncode}
+		>>> a[4:2:1]  # No valid index in the range.
+		[]
+	\end{pythoncode}		
 \end{frame}
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}[fragile]{Dictionaries}
