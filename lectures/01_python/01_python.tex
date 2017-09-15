@@ -113,7 +113,7 @@ Jan Bednarik}
 
 	There are multiple ways to use python interpreter:
 	\begin{itemize}
-		\item \pause Pure terminal - \textbf{interactive} or \textbf{script} mode.
+		\item \pause Terminal (python/IPython) - \textbf{interactive} or \textbf{script} mode.
 	\end{itemize}
 
 	\pause
@@ -131,8 +131,7 @@ Jan Bednarik}
 	\end{pythoncode}
 
 	\begin{itemize}
-		\item \pause IPython.
-		\item \pause Jupyter Notebook.
+		\item \pause Jupyter Notebook (start using \small{\texttt{\$ jupyter notebook}}).
 		\item \pause IDEs (e.g. PyCharm).
 	\end{itemize}
 
@@ -377,7 +376,7 @@ Jan Bednarik}
 	\vspace*{-0.1cm}
 	\begin{figure}[!h]
 		\centering
-		\includegraphics[width=0.6\linewidth]{img/slicing.pdf}
+		\includegraphics[width=0.55\linewidth]{img/slicing.pdf}
 	\end{figure}
 
 	\vspace*{-0.3cm}
@@ -417,7 +416,7 @@ Jan Bednarik}
 	\vspace*{-0.1cm}
 	\begin{figure}[!h]
 		\centering
-		\includegraphics[width=0.6\linewidth]{img/slicing.pdf}
+		\includegraphics[width=0.55\linewidth]{img/slicing.pdf}
 	\end{figure}
 
 	\vspace*{-0.3cm}
@@ -718,7 +717,25 @@ Jan Bednarik}
 
 \begin{frame}[fragile]{List Comprehensions}
 
-    TODO
+	\begin{itemize}
+	\item \pause Powerful and concise way to initialize lists (and dicts).
+	\item \pause Loosely follows mathematical set-builder notation.
+	\end{itemize}
+	
+	$\{2^{x} | x \in \{0 ... 10\} \}$
+	\begin{pythoncode}
+		>>> powers2 = [2**val for val in range(11)]
+		>>> print(powers)
+		[1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024]
+	\end{pythoncode}
+
+	Get all JPG files without extension.
+	\begin{pythoncode}
+		>>> imgs = ['img1.JPG', 'img2.GIF', 'img3.JPG', 'img4.TIFF']
+		>>> jpg = [n[:-4] for n in files if n[-4:] == '.JPG']
+		>>> print(jpg_files)
+		['img1', 'img2']
+	\end{pythoncode}
 
 \end{frame}
 
