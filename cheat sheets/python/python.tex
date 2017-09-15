@@ -733,23 +733,27 @@
 \begin{tikzpicture}
 \node [mybox] (box){%
 	\begin{minipage}{0.3\textwidth}
-	Use \emph{for} to iterate over lists:
+	Syntax: \\
+	\small{\texttt{[expr(v) for v in some\_list (if predicate(v))]}} \\
+
+	\vspace*{-0.2cm}
+	Get powers of $2:\ [2^0, 2^{10}]$:
 	\begin{adjustwidth}{0.5cm}{}
 	\begin{pythoncode}
-	for x in [1, 2, 3]:
-	print(x)
+	l = [2**x for x in range(11)]
+	# [1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024] 
 	\end{pythoncode}
 	\end{adjustwidth}
 	
-	Otherwise, use \emph{while} loops:
+	Get extension-less names of files with "JPG" extension:
 	\begin{adjustwidth}{0.5cm}{}
 	\begin{pythoncode}
-	i = 0
-	while i < 3:
-	print(x)
-	i += 1
+	files = ['img1.jpg', 'img2.png', 'img3.jpg']
+	l = [f[:-4] for f in files if f[-4:] == '.JPG']
+	# ['img1', 'img3']
 	\end{pythoncode}
 	\end{adjustwidth}
+
 	\end{minipage}
 };
 \node[fancytitle, right=10pt] at (box.north west) {List comprehensions};
@@ -759,23 +763,27 @@
 \begin{tikzpicture}
 \node [mybox] (box){%
 	\begin{minipage}{0.3\textwidth}
-	Use \emph{for} to iterate over lists:
+	Syntax: \\
+	\small{\texttt{[expr(v) for v in some\_list (if predicate(v))]}} \\
+	
+	\vspace*{-0.2cm}
+	Get powers of $2:\ [2^0, 2^{10}]$:
 	\begin{adjustwidth}{0.5cm}{}
 	\begin{pythoncode}
-	for x in [1, 2, 3]:
-	print(x)
+	l = [2**x for x in range(11)]
+	# [1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024] 
 	\end{pythoncode}
 	\end{adjustwidth}
 	
-	Otherwise, use \emph{while} loops:
+	Get extension-less names of files with "JPG" extension:
 	\begin{adjustwidth}{0.5cm}{}
 	\begin{pythoncode}
-	i = 0
-	while i < 3:
-	print(x)
-	i += 1
+	files = ['img1.jpg', 'img2.png', 'img3.jpg']
+	l = [f[:-4] for f in files if f[-4:] == '.JPG']
+	# ['img1', 'img3']
 	\end{pythoncode}
 	\end{adjustwidth}
+	
 	\end{minipage}
 };
 \node[fancytitle, right=10pt] at (box.north west) {Dict comprehensions};
