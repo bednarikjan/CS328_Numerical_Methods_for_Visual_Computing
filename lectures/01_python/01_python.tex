@@ -1,6 +1,7 @@
 % !TEX options=--shell-escape
 
 \documentclass[10pt]{beamer}
+% \documentclass[10pt, handout]{beamer}
 
 \usepackage[T1]{fontenc}
 \usepackage{beramono}
@@ -75,7 +76,7 @@ Jan Bednarik}
 \begin{frame}{About Python - Motivation}
 
 	Why python?
-	
+
 	\begin{itemize}
 	\item \pause High-level, focus on readable and concise code - \textbf{fast prototyping}.
 	\item \pause \textbf{Interpreted} language, \textbf{dynamic} typing - very flexible.
@@ -83,11 +84,11 @@ Jan Bednarik}
 	\item \pause Quick-and-dirt scripting, \textbf{glue code} - combine components written in other languages (NumPy, SciPy).
 	\item \pause Vast amount of \textbf{libraries} - from backend web development, games to data science
 	\end{itemize}
-	
+
 	\pause
 	\begin{figure}[!h]
 		\centering
-		\includegraphics[width=0.9\linewidth]{img/python_vs_others.png}		
+		\includegraphics[width=0.9\linewidth]{img/python_vs_others.png}
 	\end{figure}
 
 \end{frame}
@@ -100,7 +101,7 @@ Jan Bednarik}
 	\item \pause OS X and some Linux distros already include Python.
 	\item \pause Better install "custom" Python distribution.
 	\item \pause \textbf{Anaconda} with Python - We use \textbf{Python 3.6}, not 2.7! \url{https://www.anaconda.com/download/}
-	\item \pause Prepend path to python binary to your PATH. 
+	\item \pause Prepend path to python binary to your PATH.
 	\item[] e.g. \small{\texttt{export PATH="$\sim$/anaconda/bin/python:\$\{PATH\}}"}
 	\end{itemize}
 
@@ -122,13 +123,13 @@ Jan Bednarik}
 		'hello CS328'
 		>>> # Use Ctrl-D (EOF), Ctrl-Z (SIGSTP) or quit() to exit.
 	\end{pythoncode}
-	
+
 	\pause
 	\begin{pythoncode}
 		$ python my_script.py
 		'hello CS328'
 	\end{pythoncode}
-	
+
 	\begin{itemize}
 		\item \pause IPython.
 		\item \pause Jupyter Notebook.
@@ -185,7 +186,7 @@ Jan Bednarik}
 
 	\pause
 	Native Python data types:
-	
+
 	 \begin{pythoncode}
 		>>> i = 42      # int
 		>>> f = 3.14159 # float
@@ -201,23 +202,23 @@ Jan Bednarik}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}[fragile]{Data Types - Lifetime, Introspection}
-	
+
 	\pause
 	The data type can change during runtime.
-	
-	\pause	
+
+	\pause
 	\begin{pythoncode}
 		>>>  idk = 25      # Python treats "idk" as int.
 		>>>  idk = 'eggs'  # Perfectly valid, now "idk" is str.
 	\end{pythoncode}
-	
+
 	\pause
 	Checking the data type:
 	\begin{itemize}
 		\item \pause \small{\texttt{type()}, \texttt{dir()}, \texttt{help()}}
 		\item \pause \small{\texttt{instanceof()}}
 	\end{itemize}
-	
+
 	\pause
 	\begin{pythoncode}
 		>>> val = 2.718
@@ -226,6 +227,86 @@ Jan Bednarik}
 		>>> instanceof(val, float)
 		True
 	\end{pythoncode}
+\end{frame}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}[fragile]{Arithmetic operators}
+
+    \begin{pythoncode}
+        # +, -, /, //, *, **
+        >>> 1 + 2
+        3
+    \end{pythoncode}
+
+    \pause
+
+    Floating point vs. integer division:
+
+    \begin{pythoncode}
+        >>> 2 / 3
+        0.6666666666666666
+
+        >>> 2 // 3
+        0
+    \end{pythoncode}
+
+    \pause
+
+    Exponentiation:
+
+    \begin{pythoncode}
+        >>> 2 ** 3
+        8
+    \end{pythoncode}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}[fragile]{Boolean operators}
+
+    \begin{pythoncode}
+        >>> True and False
+        False
+        >>> True or False
+        True
+        >>> not False
+        True
+    \end{pythoncode}
+
+    \pause
+
+    \begin{pythoncode}
+        # Short-circuiting behaviour
+        >>> def fun(i):
+        ...     print("executed")
+        ...     return i
+
+        >>> True or fun(1)
+        True
+    \end{pythoncode}
+
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}[fragile]{Console output}
+
+    \begin{pythoncode}
+        >>> print("Hello World")
+        Hello World
+    \end{pythoncode}
+
+    \pause
+
+    Formatted strings (similar to \texttt{printf} in C):
+
+    \begin{pythoncode}
+        >>> print("Float: %f, String: %s" % (3.14, 'foo'))
+        Float: 3.140000, String: foo
+    \end{pythoncode}
+
 \end{frame}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -239,18 +320,18 @@ Jan Bednarik}
 		\item \pause Ordered sequence of elements of arbitrary data types (can be mixed).
 		\item \pause Lists are mutable.
 	\end{itemize}
-	
+
 	\pause
 	\begin{pythoncode}
-	>>> my_list = ['zero', 1, 2.0, 3 + 0j] 
+	>>> my_list = ['zero', 1, 2.0, 3 + 0j]
 	\end{pythoncode}
 
 	\begin{pythoncode}
 		# Retrieve item (indexing from 0!).
-		>>> my_list[2]  
+		>>> my_list[2]
 		2.0
 		# Change item.
-		>>> my_list[2] = 'two_point_o'  # Item assignment. 
+		>>> my_list[2] = 'two_point_o'  # Item assignment.
 	\end{pythoncode}
 \end{frame}
 
@@ -258,16 +339,16 @@ Jan Bednarik}
 \begin{frame}[fragile]{Lists - Length, Adding Items}
 	\begin{pythoncode}
 		# Query list length.
-		>>> len(my_list) 
+		>>> len(my_list)
 		4
 	\end{pythoncode}
 
 	\pause
 	\begin{pythoncode}
 		# Append the value to the end.
-		>>> my_list.append(4)  
+		>>> my_list.append(4)
 		# Extend by another list.
-		>>> my_list.extend([5, 6])  
+		>>> my_list.extend([5, 6])
 		>>> my_list
 		['zero', 1, 'two_point_o', 3 + 0j, 4, 5, 6]
 	\end{pythoncode}
@@ -275,18 +356,18 @@ Jan Bednarik}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}[fragile]{Lists - Slicing}
-	
+
 	The powerful way of retrieving sequences of list's items.
-	
+
 	\pause
 	\begin{pythoncode}
 		a = ['a', 'b', 'c', 'd', 'e']
 	\end{pythoncode}
-	
+
 	\pause
 	\begin{figure}[!h]
 		\centering
-		\includegraphics[width=0.6\linewidth]{img/slicing.pdf}		
+		\includegraphics[width=0.6\linewidth]{img/slicing.pdf}
 	\end{figure}
 \end{frame}
 
@@ -296,13 +377,13 @@ Jan Bednarik}
 	\vspace*{-0.1cm}
 	\begin{figure}[!h]
 		\centering
-		\includegraphics[width=0.6\linewidth]{img/slicing.pdf}		
+		\includegraphics[width=0.6\linewidth]{img/slicing.pdf}
 	\end{figure}
 
 	\vspace*{-0.3cm}
 	\pause
 	Syntax \small{\texttt{[start:end]}}
-	
+
 	\pause
 	\begin{pythoncode}
 		>>> a[2:4]  # Step = 1.
@@ -325,47 +406,47 @@ Jan Bednarik}
 	\begin{pythoncode}
 		>>> a[1:-1]  # All, but the first and the last.
 		['b', 'c', 'd']
-	\end{pythoncode}		
+	\end{pythoncode}
 \end{frame}
 
 
-	
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}[fragile]{Lists - Slicing [start:end:step]}
-	
+
 	\vspace*{-0.1cm}
 	\begin{figure}[!h]
 		\centering
-		\includegraphics[width=0.6\linewidth]{img/slicing.pdf}		
+		\includegraphics[width=0.6\linewidth]{img/slicing.pdf}
 	\end{figure}
 
 	\vspace*{-0.3cm}
 	\pause
 	Syntax \small{\texttt{[start:end:step]}}
-	
+
 	\pause
 	\begin{pythoncode}
 		>>> a[1:5:2]  # Every second letter.
 		['b', 'd']
 	\end{pythoncode}
-	
+
 	\pause
 	\begin{pythoncode}
 		>>> a[4:1:-2]  # Negative step -> going backwards.
 		['e', 'd', 'c']
 	\end{pythoncode}
-	
+
 	\pause
 	\begin{pythoncode}
 		>>> a[::]  # Implicit start=0, end=5, step=1
 		['a', 'b', 'c', 'd', 'e']
 	\end{pythoncode}
-	
+
 	\pause
 	\begin{pythoncode}
 		>>> a[4:2:1]  # No valid index in the range.
 		[]
-	\end{pythoncode}		
+	\end{pythoncode}
 \end{frame}
 
 
@@ -380,14 +461,14 @@ Jan Bednarik}
     \pause
 
     \begin{pythoncode}
-        >>> dict = {'name': 'Alice', 'age': 25}
+        >>> my_dict = {'name': 'Alice', 'age': 25}
     \end{pythoncode}
 
     \pause
 
     \begin{pythoncode}
         # Retrieve entry
-        >>> dict['age']
+        >>> my_dict['age']
         25
     \end{pythoncode}
 
@@ -395,16 +476,16 @@ Jan Bednarik}
 
     \begin{pythoncode}
         # Add or change entry
-        >>> dict['city'] = 'Lausanne'
+        >>> my_dict['city'] = 'Lausanne'
 
         # Delete entry
-        >>> del dict['age']
+        >>> del my_dict['age']
     \end{pythoncode}
 
     \pause
 
     \begin{pythoncode}
-        >>> dict
+        >>> my_dict
         {'name': 'Alice', 'city': 'Lausanne'}
     \end{pythoncode}
 
@@ -416,7 +497,7 @@ Jan Bednarik}
 
     \begin{pythoncode}
         # Test if key exists
-        >>> 'name' in dict
+        >>> 'name' in my_dict
         True
     \end{pythoncode}
 
@@ -424,7 +505,7 @@ Jan Bednarik}
 
     \begin{pythoncode}
         # Get list of keys
-        >>> dict.keys()
+        >>> my_dict.keys()
         dict_keys(['name', 'city'])
     \end{pythoncode}
 
@@ -432,7 +513,7 @@ Jan Bednarik}
 
     \begin{pythoncode}
         # Get list of values
-        >>> dict.values()
+        >>> my_dict.values()
         dict_values(['Alice', 'Lausanne'])
     \end{pythoncode}
 
@@ -440,15 +521,12 @@ Jan Bednarik}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\begin{frame}[fragile]{Dictionaries - Map comprehensions}
-
-    TODO
-
-\end{frame}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
 \begin{frame}[fragile]{Tuples}
+
+    \begin{itemize}
+        \item \pause Ordered sequence of elements
+        \item \pause Immutable!
+    \end{itemize}
 
     \begin{pythoncode}
         # Assignment / packing
@@ -506,7 +584,7 @@ Jan Bednarik}
 
         # Using tuple unpacking again
         >>> a, b = g(2, 5, 6)  # equivalent to g(2, 5, c=6)
-        >>> print(a, b)
+        >>> print("%d, %d" % (a, b))
         4, 16
     \end{pythoncode}
 
@@ -578,7 +656,7 @@ Jan Bednarik}
 
     \begin{pythoncode}
         >>> for x in ['a', 'b']:
-        ...     print(x)
+        ...     print("%s" % x)
 
         a
         b
@@ -610,10 +688,10 @@ Jan Bednarik}
 
     \begin{pythoncode}
         >>> for idx, val in enumerate(['a', 'b']):
-        ...     print(idx, val)
+        ...     print("%d: %s" % (idx, val))
 
-        0 a
-        1 b
+        0: a
+        1: b
     \end{pythoncode}
 
     \pause
@@ -621,12 +699,12 @@ Jan Bednarik}
     ... and dictionaries:
 
     \begin{pythoncode}
-        >>> dict = {'name': 'Alice', 'age': 25}
-        >>> for key, val in dict.items():
-        ...     print(key, val)
+        >>> my_dict = {'name': 'Alice', 'age': 25}
+        >>> for key, val in my_dict.items():
+        ...     print("%s: %s" % (key, str(val)))
 
-        name Alice
-        age 25
+        name: Alice
+        age: 25
     \end{pythoncode}
 \end{frame}
 
@@ -634,85 +712,45 @@ Jan Bednarik}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\section{Misc}
+\section{Other useful concepts}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\begin{frame}[fragile]{Arithmetic operators}
+\begin{frame}[fragile]{List Comprehensions}
 
-    \begin{pythoncode}
-        # +, -, /, //, *, **
-        >>> 1 + 2
-        3
-    \end{pythoncode}
-
-    \pause
-
-    Floating point vs. integer division:
-
-    \begin{pythoncode}
-        >>> 2 / 3
-        0.6666666666666666
-
-        >>> 2 // 3
-        0
-    \end{pythoncode}
-
-    \pause
-
-    Exponentiation:
-
-    \begin{pythoncode}
-        >>> 2 ** 3
-        8
-    \end{pythoncode}
-\end{frame}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\begin{frame}[fragile]{Boolean operators}
-
-    \begin{pythoncode}
-        >>> True and False
-        False
-        >>> True or False
-        True
-        >>> not False
-        True
-    \end{pythoncode}
-
-    \pause
-
-    \begin{pythoncode}
-        # Short-circuiting behaviour
-        >>> def fun(i):
-        ...     print("executed")
-        ...     return i
-
-        >>> True or fun(1)
-        True
-    \end{pythoncode}
+    TODO
 
 \end{frame}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}[fragile]{More on References, Shallow/Deep Copy}
 
-\begin{frame}[fragile]{Console output}
-
-    \begin{pythoncode}
-        >>> print("Hello World!")
-        Hello World!
-    \end{pythoncode}
+    \begin{itemize}
+        \item \pause Everything is \textbf{object} in Python.
+        \item \pause Variable stores only \textbf{reference} to the underlying object!
+        \item \pause Assigning one variable to another performs \textbf{shallow copy}.
+    \end{itemize}
 
     \pause
-
-    Formatted strings (similar to \texttt{printf} in C):
-
     \begin{pythoncode}
-        >>> print("Int: %d, Float: %f, String: %s" % (5, 3.14, 'foo'))
-        Int: 5, Float: 3.140000, String: foo
+        >>> A = [1, 2, 3]
+        >>> B = A
+        >>> B[1] = 0
+        >>> print(A)
+        [1, 0, 3]
     \end{pythoncode}
 
+    \begin{itemize}
+        \item \pause Module \small{\texttt{copy}} can perform \textbf{deep copy}.
+    \end{itemize}
+    \begin{pythoncode}
+        >>> import copy
+        ...
+        >>> B = copy.copy(A)
+        >>> B[1] = 0
+        >>> print(A)
+        [1, 2, 3]
+    \end{pythoncode}
 \end{frame}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -745,37 +783,6 @@ Jan Bednarik}
         3.141592653589793
     \end{pythoncode}
 
-\end{frame}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{frame}[fragile]{More on References, Shallow/Deep Copy}
-	
-	\begin{itemize}
-		\item \pause Everything is \textbf{object} in Python.
-		\item \pause Variable stores only \textbf{reference} to the underlying object!
-		\item \pause Assigning one variable to another performs \textbf{shallow copy}.
-	\end{itemize}
-	
-	\pause
-	\begin{pythoncode}
-		>>> A = [1, 2, 3]
-		>>> B = A
-		>>> B[1] = 0
-		>>> print(A)
-		[1, 0, 3]
-	\end{pythoncode}
-	
-	\begin{itemize}
-		\item \pause Module \small{\texttt{copy}} can perform \textbf{deep copy}.
-	\end{itemize}
-	\begin{pythoncode}
-		>>> import copy
-		...
-		>>> B = copy.copy(A)
-		>>> B[1] = 0
-		>>> print(A)
-		[1, 2, 3]
-	\end{pythoncode}
 \end{frame}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
