@@ -72,46 +72,65 @@ Jan Bednarik}
 \section{Introduction}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
 \begin{frame}{About Python - Motivation}
 
-Why python?
-
-\begin{itemize}
-\item \pause High-level, focus on readable and concise code - \textbf{fast prototyping}.
-\item \pause \textbf{Interpreted} language, \textbf{dynamic} typing - very flexible.
-\item \pause \textbf{Slow} run-time (dynamic typing, memory management, ...).
-\item \pause Quick-and-dirt scripting, \textbf{glue code} - combine components written in other languages (NumPy, SciPy).
-\item \pause Vast amount of \textbf{libraries} - from backend web development, games to data science
-\end{itemize}
-
-\pause
-\begin{figure}[!h]
-	\centering
-	\includegraphics[width=0.9\linewidth]{img/python_vs_others.png}		
-\end{figure}
+	Why python?
+	
+	\begin{itemize}
+	\item \pause High-level, focus on readable and concise code - \textbf{fast prototyping}.
+	\item \pause \textbf{Interpreted} language, \textbf{dynamic} typing - very flexible.
+	\item \pause \textbf{Slow} run-time (dynamic typing, memory management, ...).
+	\item \pause Quick-and-dirt scripting, \textbf{glue code} - combine components written in other languages (NumPy, SciPy).
+	\item \pause Vast amount of \textbf{libraries} - from backend web development, games to data science
+	\end{itemize}
+	
+	\pause
+	\begin{figure}[!h]
+		\centering
+		\includegraphics[width=0.9\linewidth]{img/python_vs_others.png}		
+	\end{figure}
 
 \end{frame}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \begin{frame}{Installation}
-%    It is possible to write CPython extension modules in pure C, but...
-%
-%    \begin{itemize}
-%        \item \pause Manual refcounting
-%        \item \pause Manual exception handling
-%        \item \pause Boilerplate to define functions and modules
-%        \item \pause High entry barrier, prone to programmer errors
-%        \item \pause Differences in the API between Python versions
-%    \end{itemize}
+
+	\begin{itemize}
+	\item \pause OS X and some Linux distros already include Python.
+	\item \pause Better install "custom" Python distribution.
+	\item \pause \textbf{Anaconda} with Python - We use \textbf{Python 3.6}, not 2.7! \url{https://www.anaconda.com/download/}
+	\end{itemize}
+
 \end{frame}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\begin{frame}{Working with Python}
+\begin{frame}[fragile]{Working with Python}
 
-% Terminal, IPython, Jupyter, IDEs
+	There are multiple ways to use python interpreter:
+	\begin{itemize}
+		\item \pause Pure terminal - \textbf{interactive} or \textbf{script} mode.
+	\end{itemize}
+
+	\pause
+	\begin{pythoncode}
+		$ python
+		>>> print('hello CS328')
+		'hello CS328'
+	\end{pythoncode}
+	
+	\pause
+	\begin{pythoncode}
+		$ python my_script.py
+		'hello CS328'
+	\end{pythoncode}
+	
+	\begin{itemize}
+		\item \pause IPython.
+		\item \pause Jupyter Notebook.
+		\item \pause IDEs (e.g. PyCharm).
+	\end{itemize}
 
 \end{frame}
 
