@@ -235,13 +235,6 @@
                 \end{pythoncode}
                 \end{minipage}
                 \\ \hline
-                Unpacking &
-                \begin{minipage}[t]{\textwidth}
-                \begin{pythoncode}
-                    u, v, w = t
-                \end{pythoncode}
-                \end{minipage}
-                \\ \hline
             \end{tabular}}\end{center}
     \end{minipage}
 };
@@ -379,52 +372,52 @@
 \node[fancytitle, right=10pt] at (box.north west) {Lists};
 \end{tikzpicture}
 
-%------------ LISTS - SLICING ---------------
-\begin{tikzpicture}
-\node [mybox] (box){%
-	\begin{minipage}{0.3\textwidth}
-	\begin{pythoncode}
-		a = ['a', 'b', 'c', 'd', 'e']
-	\end{pythoncode}
-
-	\vspace*{-0.3cm}
-%	\centering{
-%		\includegraphics[width=0.7\linewidth]{img/slicing.pdf}
-%	}
-	\includegraphics[width=0.7\linewidth]{img/slicing.pdf}
-	
-	Syntax \texttt{[start:end]} (start - incl., end - excl., step=1)
-	
-	\begin{center}\small{\begin{tabular}{lp{4cm} l}
-		\hline
-		Explicit start/end &
-		\begin{minipage}[t]{\textwidth}
-		\begin{pythoncode}
-		a[2:4] # Returns ['c', 'd']
-		\end{pythoncode}
-		\end{minipage}
-		\\ \hline
-		Implicit end (incl.) &
-		\begin{minipage}[t]{\textwidth}
-		\begin{pythoncode}
-		a[2:] # Returns ['c', 'd', 'e']
-		\end{pythoncode}
-		\\ \hline
-		Implicit start &
-		\begin{minipage}[t]{\textwidth}
-		\begin{pythoncode}
-		a[:3] # Returns ['a', 'd', 'e']
-		\end{pythoncode}
-		\\ \hline
-		\end{minipage}
-		\end{tabular}}\end{center}
-	
-	Syntax \texttt{[start:end:step]}
-
-	\end{minipage}
-};
-\node[fancytitle, right=10pt] at (box.north west) {Slicing lists};
-\end{tikzpicture}
+%%------------ LISTS - SLICING ---------------
+%\begin{tikzpicture}
+%\node [mybox] (box){%
+%	\begin{minipage}{0.3\textwidth}
+%	\begin{pythoncode}
+%		a = ['a', 'b', 'c', 'd', 'e']
+%	\end{pythoncode}
+%
+%	\vspace*{-0.3cm}
+%%	\centering{
+%%		\includegraphics[width=0.7\linewidth]{img/slicing.pdf}
+%%	}
+%	\includegraphics[width=0.7\linewidth]{img/slicing.pdf}
+%	
+%	Syntax \texttt{[start:end]} (start - incl., end - excl., step=1)
+%	
+%	\begin{center}\small{\begin{tabular}{lp{4cm} l}
+%		\hline
+%		Explicit start/end &
+%		\begin{minipage}[t]{\textwidth}
+%		\begin{pythoncode}
+%		a[2:4] # Returns ['c', 'd']
+%		\end{pythoncode}
+%		\end{minipage}
+%		\\ \hline
+%		Implicit end (incl.) &
+%		\begin{minipage}[t]{\textwidth}
+%		\begin{pythoncode}
+%		a[2:] # Returns ['c', 'd', 'e']
+%		\end{pythoncode}
+%		\\ \hline
+%		Implicit start &
+%		\begin{minipage}[t]{\textwidth}
+%		\begin{pythoncode}
+%		a[:3] # Returns ['a', 'd', 'e']
+%		\end{pythoncode}
+%		\\ \hline
+%		\end{minipage}
+%		\end{tabular}}\end{center}
+%	
+%	Syntax \texttt{[start:end:step]}
+%
+%	\end{minipage}
+%};
+%\node[fancytitle, right=10pt] at (box.north west) {Slicing lists};
+%\end{tikzpicture}
 
 %------------ DICTIONARIES ---------------
 \begin{tikzpicture}
