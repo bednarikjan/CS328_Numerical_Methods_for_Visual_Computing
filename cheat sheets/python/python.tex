@@ -734,8 +734,9 @@
 \node [mybox] (box){%
 	\begin{minipage}{0.3\textwidth}
 	Syntax: \\
-	\small{\texttt{[expr(v) for v in some\_list (if predicate(v))]}} \\
-
+	\scriptsize{\texttt{[expr(v) for v in some\_list (if predicate(v))]}} \\
+	
+	\normalsize
 	\vspace*{-0.2cm}
 	Get powers of $2:\ [2^0, 2^{10}]$:
 	\begin{adjustwidth}{0.5cm}{}
@@ -764,23 +765,27 @@
 \node [mybox] (box){%
 	\begin{minipage}{0.3\textwidth}
 	Syntax: \\
-	\small{\texttt{[expr(v) for v in some\_list (if predicate(v))]}} \\
+	\scriptsize{\texttt{\{expr(k):expr(v) for (k, v) in zip(l1, l2) (if predicate(k, v))\}}} \\
+	\scriptsize{\texttt{\{expr(k):expr(k) for k in some\_list (if predicate(k))\}}} \\
 	
+	\normalsize
 	\vspace*{-0.2cm}
-	Get powers of $2:\ [2^0, 2^{10}]$:
+	Create dict from 2 corresponding lists:
 	\begin{adjustwidth}{0.5cm}{}
 	\begin{pythoncode}
-	l = [2**x for x in range(11)]
-	# [1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024] 
+	names = ['morty', 'rick']
+	ages = [14, 72]
+	db = {key:val for (key, val) in zip(names, ages)}
+	# {'morty': 14, 'rick': 72}
 	\end{pythoncode}
 	\end{adjustwidth}
 	
-	Get extension-less names of files with "JPG" extension:
+	Map names to their lengths:
 	\begin{adjustwidth}{0.5cm}{}
 	\begin{pythoncode}
-	files = ['img1.jpg', 'img2.png', 'img3.jpg']
-	l = [f[:-4] for f in files if f[-4:] == '.JPG']
-	# ['img1', 'img3']
+	names = ['morty', 'rick']
+	db = {key:len(key) for key in names}
+	# {'morty': 5, 'rick': 4}
 	\end{pythoncode}
 	\end{adjustwidth}
 	
