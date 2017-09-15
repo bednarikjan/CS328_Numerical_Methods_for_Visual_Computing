@@ -1,0 +1,820 @@
+% !TEX options=--shell-escape
+
+\documentclass[10pt]{beamer}
+% \documentclass[10pt, handout]{beamer}
+
+\usepackage[T1]{fontenc}
+\usepackage{beramono}
+
+\usepackage{anyfontsize}
+\usepackage{booktabs}
+\usepackage{etoolbox}
+\usepackage{hyperref}
+\usepackage{setspace}
+\usepackage{tcolorbox}
+\usepackage{texlogos}
+\usepackage{xcolor}
+\usepackage{xspace}
+\usepackage{graphicx}
+
+\usetheme{metropolis}
+\usepackage{appendixnumberbeamer}
+
+\newcommand\cpp[1]{\cpluspluslogo #1}
+\newcommand\mono[1]{\texttt{\footnotesize{\detokenize{#1}}}\xspace}
+\newcommand\pybind{\mono{pybind11}}
+\newcommand\codeskip{\\\vspace*{0.5em}}
+\newcommand\darrow{\parbox{3cm}{\centering$\downarrow$}\smallskip}
+\newcommand\supertiny{\fontsize{3}{3}\selectfont}
+\newcommand\smaller{\fontsize{6}{6}\selectfont}
+
+\definecolor{urlcolor}{rgb}{0.75,0.45,0.15}
+\renewcommand\UrlFont{\footnotesize\ttfamily\color{urlcolor}}
+
+\definecolor{lgreen}{rgb}{0.8,0.9,0.8}
+\definecolor{lred}{rgb}{0.9,0.8,0.8}
+\definecolor{lgrey}{rgb}{0.6,0.6,0.6}
+\definecolor{lblue}{rgb}{0.8,0.8,0.9}
+
+\definecolor{dgreen}{rgb}{0.2,0.6,0.2}
+\definecolor{dred}{rgb}{0.6,0.2,0.2}
+
+\newcommand\hlbox[2]{\setlength{\fboxsep}{0pt}\colorbox{#1}{#2}}
+\newcommand\hlcode[1]{\hlbox{lgreen}{\detokenize{#1}}}
+\newcommand\hlcodealt[1]{\hlbox{lblue}{\detokenize{#1}}}
+\newcommand\dimcode[1]{\hlbox{lgrey}{\detokenize{#1}}}
+
+\usepackage{minted}
+\usemintedstyle{trac}
+\newminted{cpp}{autogobble,escapeinside=@@,fontsize=\footnotesize}
+\newminted{python}{autogobble,escapeinside=@@,fontsize=\footnotesize}
+\newminted{sh}{autogobble,escapeinside=@@,fontsize=\footnotesize}
+\BeforeBeginEnvironment{minted}{
+	\begin{tcolorbox}[colback=black!3!white,colframe=black!16!white,boxrule=0.3mm]
+	}
+	\AfterEndEnvironment{minted}{\end{tcolorbox}}
+\AtBeginEnvironment{minted}{\setstretch{1.2}}
+
+\title{Python Tutorial}
+\subtitle{CS-328 Numerical Methods for Visual Computing}
+\date{September 20, 2017}
+\author{Tizian Zeltner\\
+	Jan Bednarik}
+%\institute{Susquehanna International Group\\
+%[6\baselineskip]{euro\textbf{python} 2017}}
+
+\begin{document}
+	
+	\maketitle
+	
+	
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	\section{Introduction}
+	
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	\begin{frame}{About Python - Motivation}
+	
+	Why python?
+	
+	\begin{itemize}
+		\item  High-level, focus on readable and concise code - \textbf{fast prototyping}.
+		\item  \textbf{Interpreted} language, \textbf{dynamic} typing - very flexible.
+		\item  \textbf{Slow} run-time (dynamic typing, memory management, ...).
+		\item  Quick-and-dirty scripting, \textbf{glue code} - combine components written in other languages (NumPy, SciPy).
+		\item  Vast amount of \textbf{libraries} - from backend web development, games to data science
+	\end{itemize}
+	
+	
+	\begin{figure}[!h]
+		\centering
+		\includegraphics[width=0.9\linewidth]{img/python_vs_others.png}
+	\end{figure}
+	
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}{Installation}
+
+\begin{itemize}
+	\item  OS X and some Linux distros already include Python.
+	\item  Better install "custom" Python distribution.
+	\item  \textbf{Anaconda} with Python - We use \textbf{Python 3.6}, not 2.7! \url{https://www.anaconda.com/download/}
+	\item  Prepend path to python binary to your PATH.
+	\item[] e.g. \small{\texttt{export PATH="$\sim$/anaconda/bin/python:\$\{PATH\}}"}
+\end{itemize}
+
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}[fragile]{Working with Python}
+
+There are multiple ways to use python interpreter:
+\begin{itemize}
+\item  Terminal (python/IPython) - \textbf{interactive} or \textbf{script} mode.
+\end{itemize}
+
+
+\begin{pythoncode}
+$ python
+>>> print('hello CS328')
+'hello CS328'
+>>> # Use Ctrl-D (EOF), Ctrl-Z (SIGSTP) or quit() to exit.
+\end{pythoncode}
+
+
+\begin{pythoncode}
+$ python my_script.py
+'hello CS328'
+\end{pythoncode}
+
+\begin{itemize}
+\item  Jupyter Notebook (start using \small{\texttt{\$ jupyter notebook}}).
+\item  IDEs (e.g. PyCharm).
+\end{itemize}
+
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Language Basics}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}[fragile]{Code structure, Comments}
+Code structure
+\begin{itemize}
+\item  Python uses \textbf{indentation} (whitespace) to separate blocks.
+\item  Only relative indentation among blocks matters.
+\item  Consistent indentation within a block.
+\end{itemize}
+
+
+\begin{pythoncode}
+>>> if a < 5:
+...    print('line one')
+...      print('line two') # --> IndentationError exception.
+\end{pythoncode}
+
+
+
+Comments
+\begin{itemize}
+\item  Single-line comments, multi-line comments (docstring)
+\end{itemize}
+
+
+\begin{pythoncode}
+# I am a single line comment.
+""" I am
+a multi-line comment. """
+\end{pythoncode}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}[fragile]{Data Types - Basics}
+\begin{itemize}
+\item  Every value has a data type.
+\item  But you don't declare it, Python infers it from \textbf{assignment}.
+\end{itemize}
+
+\begin{pythoncode}
+>>> my_var = 12.17   # "my_var" is treated as float
+\end{pythoncode}
+
+
+Native Python data types:
+
+\begin{pythoncode}
+>>> i = 42      # int
+>>> f = 3.14159 # float
+>>> c = 2 + 3j  # complex
+>>> b = True    # bool
+>>> s = 'spam'  # str
+>>> n = None    # NoneType (think of as "null")
+\end{pythoncode}
+
+
+More complex native data types: tuple, set, list, dict
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}[fragile]{Data Types - Lifetime, Introspection}
+
+
+The data type can change during runtime.
+
+
+\begin{pythoncode}
+>>>  idk = 25      # Python treats "idk" as int.
+>>>  idk = 'eggs'  # Perfectly valid, now "idk" is str.
+\end{pythoncode}
+
+
+Checking the data type:
+\begin{itemize}
+\item  \small{\texttt{type()}, \texttt{dir()}, \texttt{help()}}
+\item  \small{\texttt{instanceof()}}
+\end{itemize}
+
+
+\begin{pythoncode}
+>>> val = 2.718
+>>> type(val)
+<class float>
+>>> instanceof(val, float)
+True
+\end{pythoncode}
+\end{frame}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}[fragile]{Arithmetic operators}
+
+\begin{pythoncode}
+# +, -, /, //, *, **
+>>> 1 + 2
+3
+\end{pythoncode}
+
+
+
+Floating point vs. integer division:
+
+\begin{pythoncode}
+>>> 2 / 3
+0.6666666666666666
+
+>>> 2 // 3
+0
+\end{pythoncode}
+
+
+
+Exponentiation:
+
+\begin{pythoncode}
+>>> 2 ** 3
+8
+\end{pythoncode}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}[fragile]{Boolean operators}
+
+\begin{pythoncode}
+>>> True and False
+False
+>>> True or False
+True
+>>> not False
+True
+\end{pythoncode}
+
+
+
+\begin{pythoncode}
+# Short-circuiting behaviour
+>>> def fun(i):
+...     print("executed")
+...     return i
+
+>>> True or fun(1)
+True
+\end{pythoncode}
+
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}[fragile]{Console output}
+
+\begin{pythoncode}
+>>> print("Hello World")
+Hello World
+\end{pythoncode}
+
+
+
+Formatted strings (similar to \texttt{printf} in C):
+
+\begin{pythoncode}
+>>> print("Float: %f, String: %s" % (3.14, 'foo'))
+Float: 3.140000, String: foo
+\end{pythoncode}
+
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Abstract Data Types}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}[fragile]{Lists - Definition, Retrieval, Update}
+\begin{itemize}
+\item  Ordered sequence of elements of arbitrary data types (can be mixed).
+\item  Lists are mutable.
+\end{itemize}
+
+
+\begin{pythoncode}
+>>> my_list = ['zero', 1, 2.0, 3 + 0j]
+\end{pythoncode}
+
+\begin{pythoncode}
+# Retrieve item (indexing from 0!).
+>>> my_list[2]
+2.0
+# Change item.
+>>> my_list[2] = 'two_point_o'  # Item assignment.
+\end{pythoncode}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}[fragile]{Lists - Length, Adding Items}
+\begin{pythoncode}
+# Query list length.
+>>> len(my_list)
+4
+\end{pythoncode}
+
+
+\begin{pythoncode}
+# Append the value to the end.
+>>> my_list.append(4)
+# Extend by another list.
+>>> my_list.extend([5, 6])
+>>> my_list
+['zero', 1, 'two_point_o', 3 + 0j, 4, 5, 6]
+\end{pythoncode}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}[fragile]{Lists - Slicing}
+
+The powerful way of retrieving sequences of list's items.
+
+
+\begin{pythoncode}
+a = ['a', 'b', 'c', 'd', 'e']
+\end{pythoncode}
+
+
+\begin{figure}[!h]
+\centering
+\includegraphics[width=0.6\linewidth]{img/slicing.pdf}
+\end{figure}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}[fragile]{Lists - Slicing [start:end]}
+
+\vspace*{-0.1cm}
+\begin{figure}[!h]
+\centering
+\includegraphics[width=0.55\linewidth]{img/slicing.pdf}
+\end{figure}
+
+\vspace*{-0.3cm}
+
+Syntax \small{\texttt{[start:end]}}
+
+
+\begin{pythoncode}
+>>> a[2:4]  # Step = 1.
+['c', 'd']
+\end{pythoncode}
+
+
+\begin{pythoncode}
+>>> a[2:]  # End is implicit - up to the last item (incl.)
+['c', 'd', 'e']
+\end{pythoncode}
+
+
+\begin{pythoncode}
+>>> a[:3]  # Start is implicit - from the first item (incl.)
+['a', 'b', 'c']
+\end{pythoncode}
+
+
+\begin{pythoncode}
+>>> a[1:-1]  # All, but the first and the last.
+['b', 'c', 'd']
+\end{pythoncode}
+\end{frame}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}[fragile]{Lists - Slicing [start:end:step]}
+
+\vspace*{-0.1cm}
+\begin{figure}[!h]
+\centering
+\includegraphics[width=0.55\linewidth]{img/slicing.pdf}
+\end{figure}
+
+\vspace*{-0.3cm}
+
+Syntax \small{\texttt{[start:end:step]}}
+
+
+\begin{pythoncode}
+>>> a[1:5:2]  # Every second letter.
+['b', 'd']
+\end{pythoncode}
+
+
+\begin{pythoncode}
+>>> a[4:1:-2]  # Negative step -> going backwards.
+['e', 'd', 'c']
+\end{pythoncode}
+
+
+\begin{pythoncode}
+>>> a[::]  # Implicit start=0, end=5, step=1
+['a', 'b', 'c', 'd', 'e']
+\end{pythoncode}
+
+
+\begin{pythoncode}
+>>> a[4:2:1]  # No valid index in the range.
+[]
+\end{pythoncode}
+\end{frame}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}[fragile]{Dictionaries}
+
+\begin{itemize}
+\item  Unordered set of (\emph{key, value}) pairs
+\item  Keys must be immutable (numbers, strings, tuples)
+\end{itemize}
+
+
+
+\begin{pythoncode}
+>>> my_dict = {'name': 'Alice', 'age': 25}
+\end{pythoncode}
+
+
+
+\begin{pythoncode}
+# Retrieve entry
+>>> my_dict['age']
+25
+\end{pythoncode}
+
+
+
+\begin{pythoncode}
+# Add or change entry
+>>> my_dict['city'] = 'Lausanne'
+
+# Delete entry
+>>> del my_dict['age']
+\end{pythoncode}
+
+
+
+\begin{pythoncode}
+>>> my_dict
+{'name': 'Alice', 'city': 'Lausanne'}
+\end{pythoncode}
+
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}[fragile]{Dictionaries}
+
+\begin{pythoncode}
+# Test if key exists
+>>> 'name' in my_dict
+True
+\end{pythoncode}
+
+
+
+\begin{pythoncode}
+# Get list of keys
+>>> my_dict.keys()
+dict_keys(['name', 'city'])
+\end{pythoncode}
+
+
+
+\begin{pythoncode}
+# Get list of values
+>>> my_dict.values()
+dict_values(['Alice', 'Lausanne'])
+\end{pythoncode}
+
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}[fragile]{Tuples}
+
+\begin{itemize}
+\item  Ordered sequence of elements
+\item  Immutable!
+\end{itemize}
+
+\begin{pythoncode}
+# Assignment / packing
+>>> tuple = 123, 'abc', 1+5j
+\end{pythoncode}
+
+
+
+\begin{pythoncode}
+# Immutable!
+>>> tuple[1] = 'xyz'
+Traceback (most recent call last):
+File "<stdin>", line 1, in <module>
+TypeError: 'tuple' object does not support item assignment
+\end{pythoncode}
+
+
+
+\begin{pythoncode}
+# Unpacking
+u, v, w = tuple
+\end{pythoncode}
+
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Functions}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}[fragile]{Functions}
+
+Simple function definition:
+
+\begin{pythoncode}
+>>> def f(a, b):
+...     return a * b
+
+>>> f(3, 5)
+15
+\end{pythoncode}
+
+
+
+Optional arguments and multiple return values:
+
+\begin{pythoncode}
+>>> def g(a, b, c=0):
+...     return a*b - c, a*b + c
+>>> g(3, 5)
+(15, 15)
+
+# Using tuple unpacking again
+>>> a, b = g(2, 5, 6)  # equivalent to g(2, 5, c=6)
+>>> print("%d, %d" % (a, b))
+4, 16
+\end{pythoncode}
+
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%\begin{frame}[fragile]{Function - Arguments}
+%
+%    \begin{itemize}
+%        \item Arguments are passed as values
+%        \item  Be careful of sneaky bugs!
+%    \end{itemize}
+%
+%    
+%
+%    \begin{pythoncode}
+%        >>> def h(scalar, array):
+%        ...     scalar = 9.0
+%        ...     array[1] = 13
+%
+%        >>> a = 5.0; l = [1, 2, 3]
+%        >>> h(a, l)
+%        >>> print(a, l)
+%        5.0 [1, 13, 3]
+%    \end{pythoncode}
+%
+%    \begin{itemize}
+%        \item  \texttt{l} is actually a reference (passed as an argument)!
+%    \end{itemize}
+%
+%\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Control Flow}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}[fragile]{Control Flow - Conditional Statements}
+
+\begin{pythoncode}
+>>> 25
+>>> if x < 0:
+...     print("Negative")
+... elif x == 0:
+...     print("Zero")
+... else:
+...     print("Positive")
+...
+Positive
+
+\end{pythoncode}
+
+\begin{itemize}
+\item  No parenthesis, no braces
+\item  Be careful of indentation
+\end{itemize}
+
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}[fragile]{Control Flow - Loops}
+
+Iterate over lists:
+
+\begin{pythoncode}
+>>> for x in ['a', 'b']:
+...     print("%s" % x)
+
+a
+b
+\end{pythoncode}
+
+
+
+\begin{pythoncode}
+>>> i = 0
+>>> while i < 4:
+...     # ...
+...     i += 1
+\end{pythoncode}
+
+Equivalent, but more concise:
+
+\begin{pythoncode}
+>>> for i in range(4):
+...     # ...
+\end{pythoncode}
+
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}[fragile]{Control Flow - Loops}
+
+Special functions for lists:
+
+\begin{pythoncode}
+>>> for idx, val in enumerate(['a', 'b']):
+...     print("%d: %s" % (idx, val))
+
+0: a
+1: b
+\end{pythoncode}
+
+
+
+... and dictionaries:
+
+\begin{pythoncode}
+>>> my_dict = {'name': 'Alice', 'age': 25}
+>>> for key, val in my_dict.items():
+...     print("%s: %s" % (key, str(val)))
+
+name: Alice
+age: 25
+\end{pythoncode}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Other useful concepts}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}[fragile]{List Comprehensions}
+
+\begin{itemize}
+\item  Powerful and concise way to initialize lists (and dicts).
+\item  Loosely follows mathematical set-builder notation.
+\end{itemize}
+
+$\{2^{x} | x \in \{0 ... 10\} \}$
+\begin{pythoncode}
+>>> powers2 = [2**val for val in range(11)]
+>>> print(powers)
+[1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024]
+\end{pythoncode}
+
+Get all JPG files without extension.
+\begin{pythoncode}
+>>> imgs = ['img1.JPG', 'img2.GIF', 'img3.JPG', 'img4.TIFF']
+>>> jpg = [n[:-4] for n in files if n[-4:] == '.JPG']
+>>> print(jpg_files)
+['img1', 'img2']
+\end{pythoncode}
+
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}[fragile]{Packages}
+
+Load more functionality from (external) packages / files:
+
+\begin{pythoncode}
+>>> import numpy
+>>> numpy.pi
+3.141592653589793
+\end{pythoncode}
+
+
+
+Attention: This overwrites any prior definition of \texttt{pi}!
+\begin{pythoncode}
+>>> from numpy import pi
+>>> pi
+3.141592653589793
+\end{pythoncode}
+
+
+
+Often a good ideas to keep things in their own namespaces instead:
+\begin{pythoncode}
+>>> import numpy as np
+>>> np.pi
+3.141592653589793
+\end{pythoncode}
+
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}[fragile]{More on References, Copy}
+
+\begin{itemize}
+\item  Everything is \textbf{object} in Python.
+\item  Variable stores only \textbf{reference} to the underlying object!
+\end{itemize}
+
+
+\begin{pythoncode}
+>>> A = [1, 2, 3]
+>>> B = A
+>>> B[1] = 0
+>>> print(A)
+[1, 0, 3]
+\end{pythoncode}
+
+\begin{itemize}
+\item  Function \small{\texttt{copy}} can perform \textbf{"shallow" copy}.
+\end{itemize}
+\begin{pythoncode}
+>>> B = A.copy()
+>>> B[1] = 0
+>>> print(A)
+[1, 2, 3]
+\end{pythoncode}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}[fragile]{References}
+
+\begin{itemize}
+\item Documentation\\
+\url{https://docs.python.org/3/}
+\item  Official python3 tutorial:\\
+\url{https://docs.python.org/3.1/tutorial/index.html}
+\item  All built-in functions\\
+\url{https://docs.python.org/3/library/functions.html}
+\item  ...
+
+\end{itemize}
+
+\end{frame}
+
+\end{document}

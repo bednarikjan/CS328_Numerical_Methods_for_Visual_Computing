@@ -740,37 +740,6 @@ Jan Bednarik}
 \end{frame}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{frame}[fragile]{More on References, Shallow/Deep Copy}
-
-    \begin{itemize}
-        \item \pause Everything is \textbf{object} in Python.
-        \item \pause Variable stores only \textbf{reference} to the underlying object!
-        \item \pause Assigning one variable to another performs \textbf{shallow copy}.
-    \end{itemize}
-
-    \pause
-    \begin{pythoncode}
-        >>> A = [1, 2, 3]
-        >>> B = A
-        >>> B[1] = 0
-        >>> print(A)
-        [1, 0, 3]
-    \end{pythoncode}
-
-    \begin{itemize}
-        \item \pause Module \small{\texttt{copy}} can perform \textbf{deep copy}.
-    \end{itemize}
-    \begin{pythoncode}
-        >>> import copy
-        ...
-        >>> B = copy.copy(A)
-        >>> B[1] = 0
-        >>> print(A)
-        [1, 2, 3]
-    \end{pythoncode}
-\end{frame}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \begin{frame}[fragile]{Packages}
 
@@ -832,7 +801,6 @@ Jan Bednarik}
 \end{frame}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
->>>>>>> e300538775076edfef81926bc1a6294009d936c6
 
 \begin{frame}[fragile]{References}
 

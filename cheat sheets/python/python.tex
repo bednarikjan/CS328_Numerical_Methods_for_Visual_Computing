@@ -322,7 +322,7 @@
 		Retrieve item (idx from 0) &
 		\begin{minipage}[t]{\textwidth}
 		\begin{pythoncode}
-		d[2]     # Returns 2.0
+		d[2]    # Returns 2.0
 		\end{pythoncode}
 		\end{minipage}
 		\\ \hline
@@ -362,7 +362,7 @@
 	\begin{adjustwidth}{0.5cm}{}
 	\begin{pythoncode}
 	for it in l:
-	# do something..
+	    # do something...
 	\end{pythoncode}
 	\end{adjustwidth}
 	%
@@ -372,52 +372,101 @@
 \node[fancytitle, right=10pt] at (box.north west) {Lists};
 \end{tikzpicture}
 
-%%------------ LISTS - SLICING ---------------
-%\begin{tikzpicture}
-%\node [mybox] (box){%
-%	\begin{minipage}{0.3\textwidth}
-%	\begin{pythoncode}
-%		a = ['a', 'b', 'c', 'd', 'e']
-%	\end{pythoncode}
-%
-%	\vspace*{-0.3cm}
-%%	\centering{
-%%		\includegraphics[width=0.7\linewidth]{img/slicing.pdf}
-%%	}
-%	\includegraphics[width=0.7\linewidth]{img/slicing.pdf}
-%	
-%	Syntax \texttt{[start:end]} (start - incl., end - excl., step=1)
-%	
-%	\begin{center}\small{\begin{tabular}{lp{4cm} l}
-%		\hline
-%		Explicit start/end &
-%		\begin{minipage}[t]{\textwidth}
-%		\begin{pythoncode}
-%		a[2:4] # Returns ['c', 'd']
-%		\end{pythoncode}
-%		\end{minipage}
-%		\\ \hline
-%		Implicit end (incl.) &
-%		\begin{minipage}[t]{\textwidth}
-%		\begin{pythoncode}
-%		a[2:] # Returns ['c', 'd', 'e']
-%		\end{pythoncode}
-%		\\ \hline
-%		Implicit start &
-%		\begin{minipage}[t]{\textwidth}
-%		\begin{pythoncode}
-%		a[:3] # Returns ['a', 'd', 'e']
-%		\end{pythoncode}
-%		\\ \hline
-%		\end{minipage}
-%		\end{tabular}}\end{center}
-%	
-%	Syntax \texttt{[start:end:step]}
-%
-%	\end{minipage}
-%};
-%\node[fancytitle, right=10pt] at (box.north west) {Slicing lists};
-%\end{tikzpicture}
+%------------ LISTS - SLICING ---------------
+\begin{tikzpicture}
+\node [mybox] (box){%
+	\begin{minipage}{0.3\textwidth}
+	\begin{pythoncode}
+		a = ['a', 'b', 'c', 'd', 'e']
+	\end{pythoncode}
+
+	\vspace*{-0.3cm}
+	\includegraphics[width=0.7\linewidth]{img/slicing.pdf}
+	
+	Syntax \texttt{[start:end]} (start - incl., end - excl., step=1)
+	\vspace*{-0.2cm}
+	\begin{center}\small{\begin{tabular}{lp{4cm} l}
+		\hline
+		Explicit start/end \qquad\enspace\enspace\;\; &
+		\begin{minipage}[t]{\textwidth}
+		\begin{pythoncode}
+		a[2:4]  # ['c','d']
+		\end{pythoncode}
+		\end{minipage}
+		\\ \hline
+		
+		Implicit end (incl.) &
+		\begin{minipage}[t]{\textwidth}
+		\begin{pythoncode}
+		a[2:]   # ['c','d','e']
+		\end{pythoncode}
+		\end{minipage}
+		\\ \hline
+		
+		Implicit start &
+		\begin{minipage}[t]{\textwidth}
+		\begin{pythoncode}
+		a[:3]   # ['a','d','e']
+		\end{pythoncode}
+		\end{minipage}
+		\\ \hline
+
+		Negactive indices &
+		\begin{minipage}[t]{\textwidth}
+		\begin{pythoncode}
+		a[1:-1] # ['b','c','d']
+		\end{pythoncode}
+		\end{minipage}
+		\\ \hline
+		
+	\end{tabular}}\end{center}
+
+	\vspace*{-0.15cm}	
+	Syntax \texttt{[start:end:step]}
+	\vspace*{-0.3cm}
+	
+	\begin{center}\small{\begin{tabular}{lp{4cm} l}
+		\hline
+		Explicit start/end/step &
+		\begin{minipage}[t]{\textwidth}
+		\begin{pythoncode}
+		a[1:5:2]  # ['b','d']
+		\end{pythoncode}
+		\end{minipage}
+		\\ \hline
+		
+		Negative step - backwards &
+		\begin{minipage}[t]{\textwidth}
+		\begin{pythoncode}
+		a[4:1:-2] # ['e','d','c']
+		\end{pythoncode}
+		\end{minipage}
+		\\ \hline
+		
+		Implicit start/end/step=1 &
+		\begin{minipage}[t]{\textwidth}
+		\begin{pythoncode}
+		a[::] # ['a','b','c','d','e']
+		\end{pythoncode}
+		\end{minipage}
+		\\ \hline
+		
+		No valid index in range &
+		\begin{minipage}[t]{\textwidth}
+		\begin{pythoncode}
+		a[4:2:1]  # []
+		\end{pythoncode}
+		\end{minipage}
+		\\ \hline
+		
+	\end{tabular}}\end{center}
+		
+		
+
+	\end{minipage}
+};
+\node[fancytitle, right=10pt] at (box.north west) {Slicing lists};
+\end{tikzpicture}
 
 %------------ DICTIONARIES ---------------
 \begin{tikzpicture}
@@ -483,7 +532,8 @@
             \end{minipage}
             \\ \hline
         \end{tabular}}\end{center}
-        %
+        
+        \vspace*{-0.15cm}
         Looping through all key-value pairs:
         %
         \begin{adjustwidth}{0.5cm}{}
@@ -492,7 +542,8 @@
                     # do something..
         \end{pythoncode}
         \end{adjustwidth}
-        %
+
+        \vspace*{-0.3cm}
         Similarly, access all keys or values as:
         %
         \begin{adjustwidth}{0.5cm}{}
@@ -676,6 +727,60 @@
 \node[fancytitle, right=10pt] at (box.north west) {Loops};
 \end{tikzpicture}
 
+%============ OTHER USEFUL CONCEPTS ===================================
+
+%------------ List comprehensions ---------------
+\begin{tikzpicture}
+\node [mybox] (box){%
+	\begin{minipage}{0.3\textwidth}
+	Use \emph{for} to iterate over lists:
+	\begin{adjustwidth}{0.5cm}{}
+	\begin{pythoncode}
+	for x in [1, 2, 3]:
+	print(x)
+	\end{pythoncode}
+	\end{adjustwidth}
+	
+	Otherwise, use \emph{while} loops:
+	\begin{adjustwidth}{0.5cm}{}
+	\begin{pythoncode}
+	i = 0
+	while i < 3:
+	print(x)
+	i += 1
+	\end{pythoncode}
+	\end{adjustwidth}
+	\end{minipage}
+};
+\node[fancytitle, right=10pt] at (box.north west) {List comprehensions};
+\end{tikzpicture}
+
+%------------ Dict comprehensions ---------------
+\begin{tikzpicture}
+\node [mybox] (box){%
+	\begin{minipage}{0.3\textwidth}
+	Use \emph{for} to iterate over lists:
+	\begin{adjustwidth}{0.5cm}{}
+	\begin{pythoncode}
+	for x in [1, 2, 3]:
+	print(x)
+	\end{pythoncode}
+	\end{adjustwidth}
+	
+	Otherwise, use \emph{while} loops:
+	\begin{adjustwidth}{0.5cm}{}
+	\begin{pythoncode}
+	i = 0
+	while i < 3:
+	print(x)
+	i += 1
+	\end{pythoncode}
+	\end{adjustwidth}
+	\end{minipage}
+};
+\node[fancytitle, right=10pt] at (box.north west) {Dict comprehensions};
+\end{tikzpicture}
+
 %------------ Import ---------------
 \begin{tikzpicture}
 \node [mybox] (box){%
@@ -724,147 +829,147 @@
 \newpage
 %
 %------------ CONTEÚDO CAIXA RANDOM ---------------
-\begin{tikzpicture}
-\node [mybox] (box){%
-    \begin{minipage}{0.3\textwidth}
-        Para usar a biblioteca random, primeiro é necessário importá-la. No início do programa inserimos: \\
-        \begin{pythoncode}
-            from random import *
-        \end{pythoncode}
-        Também podemos rodar o comando help(random) no interpretador python para ver quais funções a biblioteca random fornece:
-        \\
-        \textit{\$ python} \\
-        \textit{>>> import random} \\
-        \textit{>>> help(random)} \\
-        \\
-        O código em randomOps.py contem lguns exemplos das funções mais úteis desta biblioteca:\\
-    \begin{center}\small{\begin{tabular}{lp{4.5cm} l}
-        \textit{random():} & obtém o próximo número aleatório no intervalo [0.0, 1.0] \\ \hline
-        \textit{random(começo,fim):} & obter o próximo número aleatório no intervalo [começo, fim] \\ \hline
-        \textit{random(stop):} & obtém o próximo número aleatório no intervalo [0, fim]
-    \end{tabular}}\end{center}
-    \end{minipage}
-};
-%------------ CAIXA RANDOM ---------------------
-\node[fancytitle, right=10pt] at (box.north west) {Biblioteca Random};
-\end{tikzpicture}
-
-
-%------------ CONTEÚDO CAIXA MatPlotLib ---------------
-\begin{tikzpicture}
-\node [mybox] (box){%
-    \begin{minipage}{0.3\textwidth}
-        Para usar a biblioteca MatPlotLib, comece importando estes módulos Python: \\
-        \\
-        \textit{import numpy as np} \\
-        \textit{import pandas as pd} \\
-        \textit{from pandas import DataFrame, Series} \\
-        \textit{import matplotlib.pyplot as plt} \\
-        \textit{import matplotlib} \\
-        \\
-        {\bf Pyplot} é uma coleção de funções no estilo de comandos que fazem a biblioteca matplotlib funcionar como o MatLab. Cada função pyplot faz alguma alteração na plotagem do gráfico.
-    \end{minipage}
-};
-%------------ CAIXA PRELIMINARES ---------------------
-\node[fancytitle, right=10pt] at (box.north west) {Biblioteca MatPlotLib};
-\end{tikzpicture}
-
-\vfill\null
-\columnbreak
-
-%------------ CONTEUDO EXEMPLO BASICO ---------------------
-\begin{tikzpicture}
-\node [mybox] (box){%
-    \begin{minipage}{0.3\textwidth}
-        Exemplo básico de plotagem de gráfico:\\
-        \\
-        \textit{import matplotlib.pyplot as plt}\\
-        \textit{plt.plot([1,2,3,4])}\\
-        \textit{plt.ylabel('Números de Exemplo')}\\
-        \textit{plt.show()}\\
-        \\
-        Neste exemplo, foi gerado um valor para Y baseado no valor de X informado.
-    \end{minipage}
-};
-%------------ EXEMPLO BASICO BOX ---------------------
-\node[fancytitle, right=10pt] at (box.north west) {Exemplo básico MatPlotLib:};
-\end{tikzpicture}
-
-
-
-%------------ CONTEUDO DOIS EIXOS ---------------------
-\begin{tikzpicture}
-\node [mybox] (box){%
-    \begin{minipage}{0.3\textwidth}
-        Podemos também informar o valor dos dois eixos.\\
-        \\
-        \textit{import matplotlib.pyplot as plt}\\
-        \textit{plt.plot([1,2,3,4], [1,4,9,16], 'ro')}\\
-        \textit{plt.axis([0, 6, 0, 20])}\\
-        \textit{plt.show()}\\
-        \\
-        Neste caso, temos os 2 eixos mais o terceiro argumento opicional em formato de string \textit{'ro'} que indica a cor e o tipo de linha da plotagem (vide quadro a seguir).\\
-        A linha \textit{ptl.axix} mostra quais são os pontos que deverão ser marcados no gráfico.
-    \end{minipage}
-};
-%------------ DOIS EIXOS BOX ---------------------
-\node[fancytitle, right=10pt] at (box.north west) {MatPlotLib com dois eixos:};
-\end{tikzpicture}
-%------------ CONTEÚDO COMANDOS DE TEXTO ---------------------
-\begin{tikzpicture}
-\node [mybox] (box){%
-    \begin{minipage}{0.3\textwidth}
-    Os comandos a seguir são usados para criar texto na interface Pyplot:
-    \begin{center}\small{\begin{tabular}{lp{6cm} r}
-text() & adiciona texto em um local específico dos eixos. \\ \hline
-xlabel() & adiciona uma legenda para o eixo x. \\ \hline
-ylabel() & adiciona uma legenda para o eixo y. \\ \hline
-title() & adiciona um título para os eixos. \\ \hline
-figtext() & adiciona texto em um local específico da figura.
-    \end{tabular}}\end{center}
-    \end{minipage}
-};
-%------------ COMANDOS DE TEXTO BOX ---------------------
-\node[fancytitle, right=10pt] at (box.north west) {MatPlotLib - Comandos de Texto Básicos};
-\end{tikzpicture}
-%------------ CONTEUDO PROPRIEDADES ---------------------
-\begin{tikzpicture}
-\node [mybox] (box){%
-    \begin{minipage}{0.3\textwidth}
-    \begin{center}\small{\begin{tabular}{lp{5cm} l}
-{\bf Propriedade} & {\bf Tipo de Valor} \\
-alpha & float \\ \hline
-animated & [True | False] \\ \hline
-antialiased or aa & [True | False] \\ \hline
-clip\_box & uma instância matplotlib.transforma.Bbox \\ \hline
-clip\_on & [True | False] \\ \hline
-clip\_path & uma instancia de caminho e uma instancia de transformação, um Patch \\ \hline
-color or c & qualquer cor matplotlib \\ \hline
-contains & a função de teste de acertos \\ \hline
-dash\_capstyle & ['final' | 'turno' | 'projeção'] \\ \hline
-solid\_capstyle & ['final' | 'turno' | 'projeção'] \\ \hline
-dash\_joinstyle & ['topo' | 'turno' | 'corte'] \\ \hline
-solid\_joinstyle & ['topo' | 'turno' | 'corte'] \\ \hline
-dashes & sequencia de liga/desliga cor nos pontos \\ \hline
-data & (np.arranjo dadox, np.arranjo dadoy) \\ \hline
-figure & uma instância matplotlib.imagem.Figure \\ \hline
-label & qualquer string \\ \hline
-linestyle or ls & ['-'|'--'|'-.'|':'|'passos'|...] \\ \hline
-linewidth or lw & valores tipo float nos pontos \\ \hline
-lod & [True | False] \\ \hline
-marker & ['+'|','|'.'|'1'|'2'|'3'|'4'] \\ \hline
-markeredgecolor\\or mec & qualquer cor matplotlib \\ \hline
-markeredgewidth\\or mew & valor tipo float value nos pontos \\ \hline
-markerfacecolor\\or mfc & qualquer cor matplotlib \\ \hline
-markersize or ms & float \\ \hline
-markevery & [ nada | inteiro | (startind, stride) ] \\ \hline
-picker & usado na seleção da linha interativa
-    \end{tabular}}\end{center}
-    \end{minipage}
-};
-%------------ PROPRIEDADES BOX ----------------
-\node[fancytitle, right=10pt] at (box.north west) {MatPlotLib - Propriedades para Plotagem};
-\end{tikzpicture}
+%\begin{tikzpicture}
+%\node [mybox] (box){%
+%    \begin{minipage}{0.3\textwidth}
+%        Para usar a biblioteca random, primeiro é necessário importá-la. No início do programa inserimos: \\
+%        \begin{pythoncode}
+%            from random import *
+%        \end{pythoncode}
+%        Também podemos rodar o comando help(random) no interpretador python para ver quais funções a biblioteca random fornece:
+%        \\
+%        \textit{\$ python} \\
+%        \textit{>>> import random} \\
+%        \textit{>>> help(random)} \\
+%        \\
+%        O código em randomOps.py contem lguns exemplos das funções mais úteis desta biblioteca:\\
+%    \begin{center}\small{\begin{tabular}{lp{4.5cm} l}
+%        \textit{random():} & obtém o próximo número aleatório no intervalo [0.0, 1.0] \\ \hline
+%        \textit{random(começo,fim):} & obter o próximo número aleatório no intervalo [começo, fim] \\ \hline
+%        \textit{random(stop):} & obtém o próximo número aleatório no intervalo [0, fim]
+%    \end{tabular}}\end{center}
+%    \end{minipage}
+%};
+%%------------ CAIXA RANDOM ---------------------
+%\node[fancytitle, right=10pt] at (box.north west) {Biblioteca Random};
+%\end{tikzpicture}
+%
+%
+%%------------ CONTEÚDO CAIXA MatPlotLib ---------------
+%\begin{tikzpicture}
+%\node [mybox] (box){%
+%    \begin{minipage}{0.3\textwidth}
+%        Para usar a biblioteca MatPlotLib, comece importando estes módulos Python: \\
+%        \\
+%        \textit{import numpy as np} \\
+%        \textit{import pandas as pd} \\
+%        \textit{from pandas import DataFrame, Series} \\
+%        \textit{import matplotlib.pyplot as plt} \\
+%        \textit{import matplotlib} \\
+%        \\
+%        {\bf Pyplot} é uma coleção de funções no estilo de comandos que fazem a biblioteca matplotlib funcionar como o MatLab. Cada função pyplot faz alguma alteração na plotagem do gráfico.
+%    \end{minipage}
+%};
+%%------------ CAIXA PRELIMINARES ---------------------
+%\node[fancytitle, right=10pt] at (box.north west) {Biblioteca MatPlotLib};
+%\end{tikzpicture}
+%
+%\vfill\null
+%\columnbreak
+%
+%%------------ CONTEUDO EXEMPLO BASICO ---------------------
+%\begin{tikzpicture}
+%\node [mybox] (box){%
+%    \begin{minipage}{0.3\textwidth}
+%        Exemplo básico de plotagem de gráfico:\\
+%        \\
+%        \textit{import matplotlib.pyplot as plt}\\
+%        \textit{plt.plot([1,2,3,4])}\\
+%        \textit{plt.ylabel('Números de Exemplo')}\\
+%        \textit{plt.show()}\\
+%        \\
+%        Neste exemplo, foi gerado um valor para Y baseado no valor de X informado.
+%    \end{minipage}
+%};
+%%------------ EXEMPLO BASICO BOX ---------------------
+%\node[fancytitle, right=10pt] at (box.north west) {Exemplo básico MatPlotLib:};
+%\end{tikzpicture}
+%
+%
+%
+%%------------ CONTEUDO DOIS EIXOS ---------------------
+%\begin{tikzpicture}
+%\node [mybox] (box){%
+%    \begin{minipage}{0.3\textwidth}
+%        Podemos também informar o valor dos dois eixos.\\
+%        \\
+%        \textit{import matplotlib.pyplot as plt}\\
+%        \textit{plt.plot([1,2,3,4], [1,4,9,16], 'ro')}\\
+%        \textit{plt.axis([0, 6, 0, 20])}\\
+%        \textit{plt.show()}\\
+%        \\
+%        Neste caso, temos os 2 eixos mais o terceiro argumento opicional em formato de string \textit{'ro'} que indica a cor e o tipo de linha da plotagem (vide quadro a seguir).\\
+%        A linha \textit{ptl.axix} mostra quais são os pontos que deverão ser marcados no gráfico.
+%    \end{minipage}
+%};
+%%------------ DOIS EIXOS BOX ---------------------
+%\node[fancytitle, right=10pt] at (box.north west) {MatPlotLib com dois eixos:};
+%\end{tikzpicture}
+%%------------ CONTEÚDO COMANDOS DE TEXTO ---------------------
+%\begin{tikzpicture}
+%\node [mybox] (box){%
+%    \begin{minipage}{0.3\textwidth}
+%    Os comandos a seguir são usados para criar texto na interface Pyplot:
+%    \begin{center}\small{\begin{tabular}{lp{6cm} r}
+%text() & adiciona texto em um local específico dos eixos. \\ \hline
+%xlabel() & adiciona uma legenda para o eixo x. \\ \hline
+%ylabel() & adiciona uma legenda para o eixo y. \\ \hline
+%title() & adiciona um título para os eixos. \\ \hline
+%figtext() & adiciona texto em um local específico da figura.
+%    \end{tabular}}\end{center}
+%    \end{minipage}
+%};
+%%------------ COMANDOS DE TEXTO BOX ---------------------
+%\node[fancytitle, right=10pt] at (box.north west) {MatPlotLib - Comandos de Texto Básicos};
+%\end{tikzpicture}
+%%------------ CONTEUDO PROPRIEDADES ---------------------
+%\begin{tikzpicture}
+%\node [mybox] (box){%
+%    \begin{minipage}{0.3\textwidth}
+%    \begin{center}\small{\begin{tabular}{lp{5cm} l}
+%{\bf Propriedade} & {\bf Tipo de Valor} \\
+%alpha & float \\ \hline
+%animated & [True | False] \\ \hline
+%antialiased or aa & [True | False] \\ \hline
+%clip\_box & uma instância matplotlib.transforma.Bbox \\ \hline
+%clip\_on & [True | False] \\ \hline
+%clip\_path & uma instancia de caminho e uma instancia de transformação, um Patch \\ \hline
+%color or c & qualquer cor matplotlib \\ \hline
+%contains & a função de teste de acertos \\ \hline
+%dash\_capstyle & ['final' | 'turno' | 'projeção'] \\ \hline
+%solid\_capstyle & ['final' | 'turno' | 'projeção'] \\ \hline
+%dash\_joinstyle & ['topo' | 'turno' | 'corte'] \\ \hline
+%solid\_joinstyle & ['topo' | 'turno' | 'corte'] \\ \hline
+%dashes & sequencia de liga/desliga cor nos pontos \\ \hline
+%data & (np.arranjo dadox, np.arranjo dadoy) \\ \hline
+%figure & uma instância matplotlib.imagem.Figure \\ \hline
+%label & qualquer string \\ \hline
+%linestyle or ls & ['-'|'--'|'-.'|':'|'passos'|...] \\ \hline
+%linewidth or lw & valores tipo float nos pontos \\ \hline
+%lod & [True | False] \\ \hline
+%marker & ['+'|','|'.'|'1'|'2'|'3'|'4'] \\ \hline
+%markeredgecolor\\or mec & qualquer cor matplotlib \\ \hline
+%markeredgewidth\\or mew & valor tipo float value nos pontos \\ \hline
+%markerfacecolor\\or mfc & qualquer cor matplotlib \\ \hline
+%markersize or ms & float \\ \hline
+%markevery & [ nada | inteiro | (startind, stride) ] \\ \hline
+%picker & usado na seleção da linha interativa
+%    \end{tabular}}\end{center}
+%    \end{minipage}
+%};
+%%------------ PROPRIEDADES BOX ----------------
+%\node[fancytitle, right=10pt] at (box.north west) {MatPlotLib - Propriedades para Plotagem};
+%\end{tikzpicture}
 
 \end{multicols*}
 \end{document}
