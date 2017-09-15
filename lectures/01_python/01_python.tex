@@ -80,7 +80,7 @@ Jan Bednarik}
 	\item \pause High-level, focus on readable and concise code - \textbf{fast prototyping}.
 	\item \pause \textbf{Interpreted} language, \textbf{dynamic} typing - very flexible.
 	\item \pause \textbf{Slow} run-time (dynamic typing, memory management, ...).
-	\item \pause Quick-and-dirt scripting, \textbf{glue code} - combine components written in other languages (NumPy, SciPy).
+	\item \pause Quick-and-dirty scripting, \textbf{glue code} - combine components written in other languages (NumPy, SciPy).
 	\item \pause Vast amount of \textbf{libraries} - from backend web development, games to data science
 	\end{itemize}
 	
@@ -514,31 +514,31 @@ Jan Bednarik}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\begin{frame}[fragile]{Function - Arguments}
-
-    \begin{itemize}
-        \item Arguments are passed as values
-        \item \pause Be careful of sneaky bugs!
-    \end{itemize}
-
-    \pause
-
-    \begin{pythoncode}
-        >>> def h(scalar, array):
-        ...     scalar = 9.0
-        ...     array[1] = 13
-
-        >>> a = 5.0; l = [1, 2, 3]
-        >>> h(a, l)
-        >>> print(a, l)
-        5.0 [1, 13, 3]
-    \end{pythoncode}
-
-    \begin{itemize}
-        \item \pause \texttt{l} is actually a reference (passed as an argument)!
-    \end{itemize}
-
-\end{frame}
+%\begin{frame}[fragile]{Function - Arguments}
+%
+%    \begin{itemize}
+%        \item Arguments are passed as values
+%        \item \pause Be careful of sneaky bugs!
+%    \end{itemize}
+%
+%    \pause
+%
+%    \begin{pythoncode}
+%        >>> def h(scalar, array):
+%        ...     scalar = 9.0
+%        ...     array[1] = 13
+%
+%        >>> a = 5.0; l = [1, 2, 3]
+%        >>> h(a, l)
+%        >>> print(a, l)
+%        5.0 [1, 13, 3]
+%    \end{pythoncode}
+%
+%    \begin{itemize}
+%        \item \pause \texttt{l} is actually a reference (passed as an argument)!
+%    \end{itemize}
+%
+%\end{frame}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -748,12 +748,11 @@ Jan Bednarik}
 \end{frame}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{frame}[fragile]{More on References, Shallow/Deep Copy}
+\begin{frame}[fragile]{More on References, Copy}
 	
 	\begin{itemize}
 		\item \pause Everything is \textbf{object} in Python.
 		\item \pause Variable stores only \textbf{reference} to the underlying object!
-		\item \pause Assigning one variable to another performs \textbf{shallow copy}.
 	\end{itemize}
 	
 	\pause
@@ -766,12 +765,10 @@ Jan Bednarik}
 	\end{pythoncode}
 	
 	\begin{itemize}
-		\item \pause Module \small{\texttt{copy}} can perform \textbf{deep copy}.
+		\item \pause Function \small{\texttt{copy}} can perform \textbf{"shallow" copy}.
 	\end{itemize}
 	\begin{pythoncode}
-		>>> import copy
-		...
-		>>> B = copy.copy(A)
+		>>> B = A.copy()
 		>>> B[1] = 0
 		>>> print(A)
 		[1, 2, 3]
