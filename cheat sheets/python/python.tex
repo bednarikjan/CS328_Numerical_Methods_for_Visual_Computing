@@ -19,6 +19,7 @@
 \usepackage{tikz}
 \usetikzlibrary{decorations.pathmorphing}
 \usepackage{amsmath,amssymb}
+\usepackage{graphicx}
 
 \usepackage{colortbl}
 \usepackage{xcolor}
@@ -67,7 +68,97 @@
 {\footnotesize (Version 1)}
 \end{center}
 
+\vspace*{-0.3cm}
+
 %============ BASICS ==============================================
+
+%------------ Basic data types and introspection ---------------
+\begin{tikzpicture}
+\node [mybox] (box){%
+	\begin{minipage}{0.3\textwidth}
+	Basic native data types:
+	\begin{center}\small{\begin{tabular}{lp{4cm} l}
+		\hline
+		Integer \qquad\qquad\qquad\enspace&
+		\begin{minipage}[t]{\textwidth}
+		\begin{pythoncode}
+		i = 42
+		\end{pythoncode}
+		\end{minipage}
+		\\ \hline
+		Float &
+		\begin{minipage}[t]{\textwidth}
+		\begin{pythoncode}
+		3.14159
+		\end{pythoncode}
+		\end{minipage}
+		\\ \hline
+		Complex number &
+		\begin{minipage}[t]{\textwidth}
+		\begin{pythoncode}
+		2 + 3j
+		\end{pythoncode}
+		\end{minipage}
+		\\ \hline
+		Boolean &
+		\begin{minipage}[t]{\textwidth}
+		\begin{pythoncode}
+		b = True
+		\end{pythoncode}
+		\end{minipage}
+		\\ \hline
+		String &
+		\begin{minipage}[t]{\textwidth}
+		\begin{pythoncode}
+		s = 'spam'
+		\end{pythoncode}
+		\end{minipage}
+		\\ \hline
+		None type. &
+		\begin{minipage}[t]{\textwidth}
+		\begin{pythoncode}
+		n = None
+		\end{pythoncode}
+		\end{minipage}
+		\\ \hline
+		\end{tabular}}\end{center}
+	
+	Introspection functions:
+	\begin{center}\small{\begin{tabular}{lp{4cm} l}
+		\hline
+		Type of an object &
+		\begin{minipage}[t]{\textwidth}
+		\begin{pythoncode}
+		type(var)
+		\end{pythoncode}
+		\end{minipage}
+		\\ \hline
+		Built-in system help &
+		\begin{minipage}[t]{\textwidth}
+		\begin{pythoncode}
+		help(var)
+		\end{pythoncode}
+		\end{minipage}
+		\\ \hline
+		Lists objetc's attributes &
+		\begin{minipage}[t]{\textwidth}
+		\begin{pythoncode}
+		dir(var)
+		\end{pythoncode}
+		\end{minipage}
+		\\ \hline
+		Class membership test &
+		\begin{minipage}[t]{\textwidth}
+		\begin{pythoncode}
+		isinstance(var, class)
+		\end{pythoncode}
+		\end{minipage}
+		\\ \hline
+		\end{tabular}}\end{center}
+	\end{minipage}
+};
+\node[fancytitle, right=10pt] at (box.north west) {Basic data yypes and introspection};
+\end{tikzpicture}
 
 %------------ Operators ---------------
 \begin{tikzpicture}
@@ -213,6 +304,127 @@
 \columnbreak
 
 %============ ABSTRACT DATATYPES ==================================
+
+%------------ LISTS ---------------
+\begin{tikzpicture}
+\node [mybox] (box){%
+	\begin{minipage}{0.3\textwidth}
+	Ordered sequence of elements of arbitrary data types.
+	\begin{center}\small{\begin{tabular}{lp{4cm} l}
+		\hline
+		Create empty &
+		\begin{minipage}[t]{\textwidth}
+		\begin{pythoncode}
+		empty_l = []
+		\end{pythoncode}
+		\end{minipage}
+		\\ \hline
+		Create example &
+		\begin{minipage}[t]{\textwidth}
+		\begin{pythoncode}
+		l = ['zero', 1, 2.0, 3 + 0j]
+		\end{pythoncode}
+		\end{minipage}
+		\\ \hline
+		Retrieve item (idx from 0) &
+		\begin{minipage}[t]{\textwidth}
+		\begin{pythoncode}
+		d[2]     # Returns 2.0
+		\end{pythoncode}
+		\end{minipage}
+		\\ \hline
+		Change item &
+		\begin{minipage}[t]{\textwidth}
+		\begin{pythoncode}
+		l[2] = 'two_point_o' 
+		\end{pythoncode}
+		\end{minipage}
+		\\ \hline
+		Query length &
+		\begin{minipage}[t]{\textwidth}
+		\begin{pythoncode}
+		len(l)  # Returns 4
+		\end{pythoncode}
+		\end{minipage}
+		\\ \hline
+		Append value to the end &
+		\begin{minipage}[t]{\textwidth}
+		\begin{pythoncode}
+		l.append(4)
+		\end{pythoncode}
+		\end{minipage}
+		\\ \hline
+		Extend by another list. &
+		\begin{minipage}[t]{\textwidth}
+		\begin{pythoncode}
+		l.extend([5, 6])
+		\end{pythoncode}
+		\end{minipage}
+		\\ \hline
+		\end{tabular}}\end{center}
+	
+	\vspace*{-0.2cm}
+	Looping through all items:
+	%
+	\begin{adjustwidth}{0.5cm}{}
+	\begin{pythoncode}
+	for it in l:
+	# do something..
+	\end{pythoncode}
+	\end{adjustwidth}
+	%
+	%
+	\end{minipage}
+};
+\node[fancytitle, right=10pt] at (box.north west) {Lists};
+\end{tikzpicture}
+
+%------------ LISTS - SLICING ---------------
+\begin{tikzpicture}
+\node [mybox] (box){%
+	\begin{minipage}{0.3\textwidth}
+	\begin{pythoncode}
+		a = ['a', 'b', 'c', 'd', 'e']
+	\end{pythoncode}
+
+	\vspace*{-0.3cm}
+%	\centering{
+%		\includegraphics[width=0.7\linewidth]{img/slicing.pdf}
+%	}
+	\includegraphics[width=0.7\linewidth]{img/slicing.pdf}
+	
+	Syntax \texttt{[start:end]} (start - incl., end - excl., step=1)
+	
+	\begin{center}\small{\begin{tabular}{lp{4cm} l}
+		\hline
+		Explicit start/end &
+		\begin{minipage}[t]{\textwidth}
+		\begin{pythoncode}
+		a[2:4] # Returns ['c', 'd']
+		\end{pythoncode}
+		\end{minipage}
+		\\ \hline
+		Implicit end (incl.) &
+		\begin{minipage}[t]{\textwidth}
+		\begin{pythoncode}
+		a[2:] # Returns ['c', 'd', 'e']
+		\end{pythoncode}
+		\\ \hline
+		Implicit start &
+		\begin{minipage}[t]{\textwidth}
+		\begin{pythoncode}
+		a[:3] # Returns ['a', 'd', 'e']
+		\end{pythoncode}
+		\\ \hline
+		\end{minipage}
+		\end{tabular}}\end{center}
+	
+	Syntax \texttt{[start:end:step]}
+
+	\end{minipage}
+};
+\node[fancytitle, right=10pt] at (box.north west) {Slicing lists};
+\end{tikzpicture}
 
 %------------ DICTIONARIES ---------------
 \begin{tikzpicture}
