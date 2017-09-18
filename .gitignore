@@ -22,3 +22,6 @@ missfont.log
 
 # pygment build folders
 _minted*
+
+## Jupyter auxilliary files.
+.ipynb_checkpoints
